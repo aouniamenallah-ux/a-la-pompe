@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Territoire et pouvoir d'achat — À la pompe</title>
+  <meta name="description" content="Stations, enseignes, voiture, budget : les prix des carburants en Corse croisés avec les données de l'Insee et le reste de la France.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="À la pompe, accueil">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="4" width="14" height="23" rx="2.5" fill="#f2b705"/><rect x="8" y="7.5" width="8" height="6" rx="1" fill="#1b1f23"/><rect x="3" y="26" width="18" height="3" rx="1" fill="#f2b705"/><path d="M19 10.5h3a2 2 0 0 1 2 2v9a1.75 1.75 0 0 0 3.5 0v-9.5l-3-3.5" fill="none" stroke="#f2b705" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>À la <em>pompe</em></span>
+    </a>
+    <button class="icon-btn burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Ouvrir le menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <nav class="nav" id="nav" aria-label="Navigation principale">
+      <a href="index.html">L'essentiel</a>
+      <a href="stations.html">Stations &amp; carte</a>
+      <a href="territoire.html" aria-current="page">Territoire</a>
+      <a href="analyse.html">Analyse statistique</a>
+      <a href="communication.html">Communication</a>
+      <button class="icon-btn theme-toggle" type="button" aria-label="Changer de thème"></button>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu">
+  <section class="band hero" aria-labelledby="titre">
+    <div class="wrap" style="grid-template-columns:1fr">
+      <div>
+        <p class="eyebrow">Territoire &amp; pouvoir d'achat</p>
+        <h1 id="titre">En Corse, on ne peut pas se passer de la voiture. Alors le prix du plein pèse plus lourd.</h1>
+        <p class="lede" style="max-width:68ch">On croise ici les prix relevés dans les stations avec les chiffres de l'Insee et le fichier national des prix&nbsp;: combien de stations et quelles enseignes, comment se déplacent les Corses, ce que la crise de 2026 coûte à un ménage, et si la Corse paie plus cher que le continent.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="kpis" id="kpis-terr">
+        <div class="kpi"><div class="label">Stations pour 10&nbsp;000 habitants en Corse</div><div class="value" data-ter="dens-corse">3,5</div><div class="sub">contre <span data-ter="dens-cont">1,5</span> sur le continent</div></div>
+        <div class="kpi"><div class="label">Actifs qui vont travailler en voiture</div><div class="value" data-ter="voiture-corse-kpi">85,5<small>&nbsp;%</small></div><div class="sub">contre <span data-ter="voiture-france">74&nbsp;%</span> en France (2017)</div></div>
+        <div class="kpi"><div class="label">Ce que la crise coûte par an à un conducteur moyen au gazole</div><div class="value" data-ter="surcout-g-kpi">+303<small>&nbsp;€</small></div><div class="sub"><span data-ter="budget-p1-g">1&nbsp;193&nbsp;€</span> avant la crise, <span data-ter="budget-p2-g">1&nbsp;496&nbsp;€</span> pendant</div></div>
+        <div class="kpi"><div class="label">Écart de prix du gazole avec le continent, le <span data-ap="date-fin">24 novembre 2026</span></div><div class="value" data-ter="ecart-dernier-g-kpi">+10,4<small>&nbsp;ct</small></div><div class="sub">par litre&nbsp;; <span data-ter="ecart-avant-g">+11,1&nbsp;ct</span> en moyenne avant la crise</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1. Densité -->
+  <section class="section" aria-labelledby="s1">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Les stations</p>
+        <h2 id="s1">Beaucoup de stations pour peu d'habitants, sur un territoire immense</h2>
+        <p class="lede text">En 2026, <strong data-ter="st-corse">125</strong> stations corses ont affiché au moins un prix&nbsp;: <span data-ter="st-2a">59</span> en Corse-du-Sud et <span data-ter="st-2b">66</span> en Haute-Corse. Rapporté à la population, c'est <strong><span data-ter="ratio-dens">2,4</span> fois plus</strong> que sur le continent&nbsp;: une station pour <span data-ter="hab-st-corse">2&nbsp;844</span> habitants, contre une pour <span data-ter="hab-st-cont">6&nbsp;801</span>. Mais rapporté à la superficie, l'île est moins bien couverte, avec <span data-ter="km2-corse">1,4</span> station pour 100&nbsp;km² contre <span data-ter="km2-cont">1,8</span>. Les deux départements se ressemblent beaucoup&nbsp;: la Corse-du-Sud a autant de stations par habitant que la Haute-Corse, environ <span data-ter="dens-2a">3,5</span> pour 10&nbsp;000.</p>
+      </div>
+      <figure class="chart-card" id="carte-densite">
+        <div class="chart-head">
+          <h3>Nombre de stations rapporté à la population ou à la superficie</h3>
+          <p class="sub">Stations ayant affiché au moins un prix en 2026. Continent&nbsp;: France métropolitaine hors Corse.</p>
+        </div>
+        <div class="controls">
+          <div class="seg" role="group" aria-label="Rapporter le nombre de stations" id="dens-mode">
+            <button type="button" data-v="hab" aria-pressed="true">Pour 10&nbsp;000 habitants</button>
+            <button type="button" data-v="km2" aria-pressed="false">Pour 100&nbsp;km²</button>
+          </div>
+        </div>
+        <div class="chart" id="densite" role="img" aria-label="Diagramme en barres : nombre de stations pour 10 000 habitants en Corse-du-Sud, en Haute-Corse, en Corse et sur le continent."></div>
+        <figcaption class="chart-foot"><span>Sources : prix-carburants.gouv.fr, fichiers annuels (stations) · Insee, populations de référence 2023 · IGN (superficies)</span></figcaption>
+      </figure>
+
+      <figure class="chart-card" id="carte-acces">
+        <div class="chart-head">
+          <h3>À quelle distance de la station la plus proche&nbsp;?</h3>
+          <p class="sub">Distance à vol d'oiseau entre le centre de chaque commune et la station la plus proche. Par la route, c'est souvent bien plus, surtout en montagne.</p>
+        </div>
+        <div class="controls">
+          <div class="seg" role="group" aria-label="Afficher sur la carte" id="acces-mode">
+            <button type="button" data-v="distance" aria-pressed="true">Distance</button>
+            <button type="button" data-v="enseignes" aria-pressed="false">Enseignes</button>
+          </div>
+        </div>
+        <div class="legend" id="acces-legende" aria-hidden="true"></div>
+        <div class="explorer">
+          <div class="chart" id="acces" role="img" aria-label="Carte des 360 communes corses colorées selon la distance à la station la plus proche, avec les stations actives en 2026."></div>
+          <div>
+            <div class="day-stats" id="acces-stats" aria-live="polite"></div>
+            <p class="ctl-label" style="margin-top:14px" id="acces-note"></p>
+          </div>
+        </div>
+        <figcaption class="chart-foot"><span>Sources : prix-carburants.gouv.fr (stations actives en 2026) · data.corsica (enseignes) · IGN ADMIN EXPRESS via france-geojson (communes) · Traitement : distance à vol d'oiseau depuis le centre de gravité de la commune</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 2. Enseignes -->
+  <section class="section" aria-labelledby="s2">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Les enseignes</p>
+        <h2 id="s2">Trois réseaux se partagent l'île, et aucune grande surface</h2>
+        <p class="lede text">Sur le continent, 70&nbsp;% du carburant se vend dans les grandes surfaces. En Corse, aucune ne vend de carburant, faute de maîtriser son importation&nbsp;: l'Autorité de la concurrence décrit un marché tenu par trois opérateurs seulement, avec deux dépôts pétroliers pour toute l'île, à Ajaccio et à Lucciana. Dans les données, ce sont les enseignes VITO, TotalEnergies et ENI&nbsp;; VITO arrive en tête dans les deux départements. Dans <span data-ter="epci-60">7</span> intercommunalités sur <span data-ter="epci-n">18</span>, une même enseigne tient au moins 60&nbsp;% des stations dont on connaît l'enseigne, une concentration que l'Autorité de la concurrence relevait déjà en 2020.</p>
+      </div>
+      <figure class="chart-card" id="carte-ens-dep">
+        <div class="chart-head">
+          <h3>Stations par enseigne dans chaque département</h3>
+          <p class="sub">Stations actives en 2026. L'enseigne n'est connue que pour les stations du jeu data.corsica&nbsp;; les autres sont classées «&nbsp;non renseignée&nbsp;».</p>
+        </div>
+        <div class="legend" id="ens-legende" aria-hidden="true"></div>
+        <div class="chart" id="ens-dep" role="img" aria-label="Barres empilées du nombre de stations par enseigne en Corse-du-Sud et en Haute-Corse."></div>
+        <figcaption class="chart-foot"><span>Sources : data.corsica (enseignes) · prix-carburants.gouv.fr (stations actives en 2026)</span></figcaption>
+      </figure>
+      <figure class="chart-card" id="carte-ens-epci">
+        <div class="chart-head">
+          <h3>Une case par station, dans chaque intercommunalité</h3>
+          <p class="sub">Stations actives en 2026 dont l'enseigne est connue, classées par intercommunalité. La part de l'enseigne la plus présente est indiquée à droite.</p>
+        </div>
+        <div class="chart" id="ens-epci" role="img" aria-label="Graphique unitaire : chaque case est une station colorée selon son enseigne, une ligne par intercommunalité."></div>
+        <figcaption class="chart-foot"><span>Source : data.corsica (enseignes et intercommunalités) · Autorité de la concurrence, avis 20-A-11 (2020)</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 3. Voiture -->
+  <section class="section" aria-labelledby="s3">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">La voiture</p>
+        <h2 id="s3">Ici, on va travailler en voiture&nbsp;: les transports en commun ne pèsent presque rien</h2>
+        <p class="lede text">En Corse, <strong data-ter="voiture-corse">85,5&nbsp;%</strong> des actifs qui se déplacent vont travailler en voiture, contre <span data-ter="voiture-france">74&nbsp;%</span> en moyenne en France et 82&nbsp;% en province. C'est le troisième taux des régions de province, alors que les trajets y sont souvent courts. Les transports en commun ne transportent que <span data-ter="tc-corse">2,3&nbsp;%</span> des actifs, contre <span data-ter="tc-france">15,2&nbsp;%</span> en France. Presque neuf ménages sur dix ont une voiture, et près de quatre sur dix en ont au moins deux&nbsp;: c'est le cas de 40&nbsp;% des ménages de Corse-du-Sud.</p>
+      </div>
+      <figure class="chart-card" id="carte-voiture">
+        <div class="chart-head">
+          <h3>La Corse comparée à la France</h3>
+          <p class="sub">En % des actifs en emploi ou des ménages. Survolez une ligne pour le détail par département quand il existe.</p>
+        </div>
+        <div class="legend" aria-hidden="true">
+          <span><i class="key key-ci" style="background:var(--ink)"></i>Corse</span>
+          <span><i class="key key-ci" style="background:var(--surface);box-shadow:inset 0 0 0 2px var(--muted)"></i>France</span>
+        </div>
+        <div class="chart" id="voiture" role="img" aria-label="Diagramme en haltères comparant la Corse et la France : part des actifs en voiture, en transports en commun, part des ménages équipés d'une ou de deux voitures."></div>
+        <figcaption class="chart-foot"><span>Sources : Insee Flash Corse n°&nbsp;58 et Insee Première n°&nbsp;1835 (actifs en voiture, 2017) · ANFA, diagnostic régional Corse 2026 (transports en commun) · Insee, RP 2022 (équipement des ménages, France métropolitaine)</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 4. Continent -->
+  <section class="section" aria-labelledby="s4">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Corse et continent</p>
+        <h2 id="s4">Avant la crise, la Corse payait son gazole 11 centimes plus cher. Pendant, presque plus rien.</h2>
+        <p class="lede text">D'avril 2025 à février 2026, le litre de gazole coûte en moyenne <strong><span data-ter="ecart-avant-g-abs">11,1</span>&nbsp;centimes de plus</strong> en Corse que sur le continent&nbsp;: la Corse-du-Sud et la Haute-Corse sont alors les <span data-ter="rang-avant">2<sup>e</sup> et 3<sup>e</sup></span> départements les plus chers de France, derrière Paris. Pendant la crise, l'écart fond à <span data-ter="ecart-crise-g">+1,4&nbsp;ct</span>&nbsp;: les prix corses montent moins vite, et l'île est même moins chère que le continent <span data-ter="jours-moins-chere-g">104</span> jours sur <span data-ter="jours-crise">270</span>, comme en septembre (<span data-ter="sept-ecart-g">−5,1&nbsp;ct</span>). <span data-ter="destock-phrase">Mais depuis le déblocage des stocks de gazole, le 1<sup>er</sup> novembre, le continent a gagné 25,3 centimes et la Corse seulement 5,4&nbsp;: l'écart est revenu à +10,4 centimes.</span></p>
+      </div>
+      <figure class="chart-card" id="carte-continent">
+        <div class="chart-head">
+          <h3>Prix moyen du litre en Corse et sur le continent</h3>
+          <p class="sub">Moyenne journalière des stations. La zone colorée montre l'écart&nbsp;: <span style="color:var(--plus)">rouge</span> quand la Corse est plus chère, <span style="color:var(--moins)">bleu</span> quand elle l'est moins.</p>
+        </div>
+        <div class="controls">
+          <div class="seg" role="group" aria-label="Carburant" id="ct-carb">
+            <button type="button" data-v="g" aria-pressed="true"><i class="key key-sq bg-g"></i>Gazole</button>
+            <button type="button" data-v="s" aria-pressed="false"><i class="key key-ci bg-s"></i>SP95</button>
+          </div>
+        </div>
+        <div class="legend" id="ct-legende" aria-hidden="true"></div>
+        <div class="chart" id="continent" role="img" aria-label="Courbes du prix moyen du litre en Corse et sur le continent depuis avril 2025, avec la zone d'écart entre les deux."></div>
+        <figcaption class="chart-foot"><span>Sources : data.corsica puis prix-carburants.gouv.fr (Corse, <span data-ap="stations">108</span> stations) · prix-carburants.gouv.fr, fichiers annuels 2025 et 2026 (continent, <span data-ter="st-cont-cmp">9&nbsp;470</span> stations)</span></figcaption>
+      </figure>
+      <figure class="chart-card" id="carte-classement">
+        <div class="chart-head">
+          <h3>Les 96 départements, du moins cher au plus cher</h3>
+          <p class="sub">Prix moyen du litre sur la période choisie. Chaque trait est un département&nbsp;; les deux départements corses sont signalés.</p>
+        </div>
+        <div class="controls">
+          <div class="seg" role="group" aria-label="Carburant" id="cl-carb">
+            <button type="button" data-v="g" aria-pressed="true"><i class="key key-sq bg-g"></i>Gazole</button>
+            <button type="button" data-v="s" aria-pressed="false"><i class="key key-ci bg-s"></i>SP95</button>
+          </div>
+          <div class="seg" role="group" aria-label="Période" id="cl-per">
+            <button type="button" data-v="avant_crise" aria-pressed="true">Avant la crise</button>
+            <button type="button" data-v="crise" aria-pressed="false">Pendant la crise</button>
+            <button type="button" data-v="dernier_jour" aria-pressed="false">Dernier jour</button>
+          </div>
+        </div>
+        <div class="chart" id="classement" role="img" aria-label="Classement des départements selon le prix moyen du litre, avec la position de la Corse-du-Sud et de la Haute-Corse."></div>
+        <figcaption class="chart-foot"><span>Source : prix-carburants.gouv.fr, fichiers annuels 2025 et 2026 · Traitement : département déduit du code postal, départements d'au moins 5 stations</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 5. Pouvoir d'achat -->
+  <section class="section" aria-labelledby="s5">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Pouvoir d'achat</p>
+        <h2 id="s5">Ce que la crise coûte à un ménage corse</h2>
+        <p class="lede text">Une voiture roule en moyenne <span data-ter="km">11&nbsp;600</span>&nbsp;km par an et consomme <span data-ter="conso-g">5,9</span>&nbsp;litres aux 100 au gazole. Au prix moyen corse, cela faisait <strong data-ter="budget-p1-g">1&nbsp;193&nbsp;€</strong> par an avant la crise et <strong data-ter="budget-p2-g">1&nbsp;496&nbsp;€</strong> au prix moyen de la crise, soit <span data-ter="surcout-g">303&nbsp;€</span> de plus. Pour une personne seule dont le niveau de vie se situe à la limite des 10&nbsp;% les plus modestes de Haute-Corse (<span data-ter="d1-2b">11&nbsp;770&nbsp;€</span> par an), ce budget représente <strong data-ter="mois-d1-2b">1,5 mois</strong> de revenu&nbsp;: au-delà d'un mois, l'Insee considère un ménage comme particulièrement exposé au prix du carburant. Faites le calcul avec votre propre voiture.</p>
+      </div>
+      <div class="chart-card simu" id="simulateur">
+        <div class="simu-in">
+          <div class="field">
+            <p class="ctl-label" id="sim-carb-l">Carburant</p>
+            <div class="seg" role="group" aria-labelledby="sim-carb-l" id="sim-carb">
+              <button type="button" data-v="g" aria-pressed="true"><i class="key key-sq bg-g"></i>Gazole</button>
+              <button type="button" data-v="s" aria-pressed="false"><i class="key key-ci bg-s"></i>SP95</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="sim-km">Kilomètres par an&nbsp;: <span id="sim-km-out" class="num">11 600 km</span></label>
+            <input type="range" id="sim-km" min="2000" max="40000" step="100" value="11600">
+          </div>
+          <div class="field">
+            <label for="sim-conso">Consommation&nbsp;: <span id="sim-conso-out" class="num">5,9 L/100 km</span></label>
+            <input type="range" id="sim-conso" min="3" max="12" step="0.1" value="5.9">
+          </div>
+          <div class="field">
+            <p class="ctl-label" id="sim-dep-l">Département</p>
+            <div class="seg" role="group" aria-labelledby="sim-dep-l" id="sim-dep">
+              <button type="button" data-v="2A" aria-pressed="false">Corse-du-Sud</button>
+              <button type="button" data-v="2B" aria-pressed="true">Haute-Corse</button>
+            </div>
+          </div>
+          <div class="field">
+            <p class="ctl-label" id="sim-rev-l">Revenu de référence</p>
+            <div class="seg" role="group" aria-labelledby="sim-rev-l" id="sim-rev">
+              <button type="button" data-v="mediane" aria-pressed="true">Niveau de vie médian</button>
+              <button type="button" data-v="d1" aria-pressed="false">10&nbsp;% les plus modestes</button>
+            </div>
+          </div>
+        </div>
+        <div class="simu-out" aria-live="polite">
+          <div class="chart" id="sim-barres" role="img" aria-label="Budget carburant annuel avant la crise, pendant la crise, aujourd'hui et sur le continent."></div>
+          <div class="calc-save" id="sim-bilan"></div>
+          <div class="chart" id="sim-jauge" role="img" aria-label="Budget carburant annuel exprimé en mois de revenu, comparé au seuil d'un mois retenu par l'Insee."></div>
+        </div>
+        <p class="ctl-label simu-note" id="sim-note"></p>
+      </div>
+
+      <figure class="chart-card" id="carte-50e" style="margin-top:28px">
+        <div class="chart-head">
+          <h3>Avec 50&nbsp;€ de gazole, combien de kilomètres&nbsp;?</h3>
+          <p class="sub">Au prix moyen corse, pour une voiture qui consomme <span data-ter="conso-g">5,9</span>&nbsp;L aux 100&nbsp;km.</p>
+        </div>
+        <div class="chart" id="km50" role="img" aria-label="Distance parcourue avec 50 euros de gazole avant la crise, au pic de la crise et aujourd'hui."></div>
+        <figcaption class="chart-foot"><span>Sources : data.corsica puis prix-carburants.gouv.fr (prix) · CCFA 2025 (consommation moyenne d'une voiture diesel)</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 6. Consommation -->
+  <section class="section" aria-labelledby="s6">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Consommation</p>
+        <h2 id="s6">Face aux prix, on roule moins</h2>
+        <p class="lede text">En France, la consommation de carburant a chuté au printemps 2026, du jamais-vu hors crise sanitaire. En Corse, les ventes ne sont pas publiées mois par mois. Mais on peut les estimer&nbsp;: selon le Conseil des prélèvements obligatoires, une hausse du prix de 1&nbsp;% fait baisser la consommation de 0,3&nbsp;%. Avec un gazole <span data-ter="hausse-g">25&nbsp;%</span> plus cher en moyenne pendant la crise, la consommation corse aurait reculé d'environ <strong data-ter="baisse-g-abs">7,6&nbsp;%</strong>, autant que le recul mesuré en France pour le gazole sur neuf mois.</p>
+      </div>
+      <div class="kpis kpis-flat">
+        <div class="kpi"><div class="label">Consommation de carburants en France, avril 2026, sur un an</div><div class="value">−11<small>&nbsp;%</small></div><div class="sub">puis −12&nbsp;% en mai (Douanes)</div></div>
+        <div class="kpi"><div class="label">Livraisons de gazole en France, neuf premiers mois de 2026</div><div class="value">−7,5<small>&nbsp;%</small></div><div class="sub">−4,8&nbsp;% tous carburants (CPDP)</div></div>
+        <div class="kpi"><div class="label">Estimation pour la Corse, gazole, pendant la crise</div><div class="value" data-ter="baisse-g-kpi">−7,6<small>&nbsp;%</small></div><div class="sub">SP95&nbsp;: <span data-ter="baisse-s">−3,4&nbsp;%</span> (élasticité de −0,3)</div></div>
+        <div class="kpi"><div class="label">Baisse des ventes dans certaines stations, automne 2026</div><div class="value">20 à 40<small>&nbsp;%</small></div><div class="sub">selon Mobilians (stations indépendantes)</div></div>
+      </div>
+      <p class="ctl-label" style="margin-top:14px">Sources&nbsp;: Bercy et Douanes (avril et mai 2026, via AFP et prix-carburant.eu) · Ufip Énergies et Mobilités, données CPDP (neuf mois, via Économie Matin) · Conseil des prélèvements obligatoires, juin 2026 (élasticité) · Mobilians (via AFP, 3 novembre 2026). L'estimation corse applique l'élasticité à la hausse moyenne des prix corses pendant la crise&nbsp;; elle ne remplace pas une mesure des ventes.</p>
+    </div>
+  </section>
+
+  <!-- 7. 2A ou 2B -->
+  <section class="section" aria-labelledby="s7">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Corse-du-Sud ou Haute-Corse</p>
+        <h2 id="s7">Où le carburant pèse-t-il le plus&nbsp;?</h2>
+        <p class="lede text" id="duel-texte">Les deux départements ont presque autant de stations par habitant. La Corse-du-Sud a un peu plus de ménages équipés de deux voitures. La Haute-Corse cumule plus de communes éloignées d'une station, un niveau de vie plus bas et un gazole un peu plus cher pendant la crise&nbsp;: c'est là que le carburant pèse le plus dans le budget.</p>
+      </div>
+      <div class="chart-card">
+        <div class="table-scroll" style="max-height:none">
+          <table class="duel" id="duel">
+            <caption class="sr-only">Comparaison de la Corse-du-Sud et de la Haute-Corse</caption>
+            <thead><tr><th scope="col">Indicateur</th><th scope="col" class="n">Corse-du-Sud</th><th scope="col" class="n">Haute-Corse</th><th scope="col">Source</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p class="ctl-label" style="margin-top:12px">Sur chaque ligne, le chiffre en gras et la barre foncée signalent le département le plus exposé au prix du carburant (aucun quand l'écart est inférieur à 2&nbsp;%). Les ventes de carburant par département (CPDP) ne figurent pas dans ce tableau&nbsp;; elles compteraient aussi le carburant des touristes, très nombreux l'été, et ne diraient pas ce que consomment les habitants.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Méthode et sources -->
+  <section class="section" aria-labelledby="s8">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Méthode</p>
+        <h2 id="s8">D'où viennent ces chiffres</h2>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <h3>Calculés à partir des prix</h3>
+          <p>Stations actives, distances, prix moyens par département et comparaison avec le continent viennent des fichiers annuels 2025 et 2026 de prix-carburants.gouv.fr, traités avec la même méthode que les stations corses&nbsp;: prix aberrants retirés, dernier prix connu reporté pendant 120&nbsp;jours au plus. Le continent regroupe la France métropolitaine hors Corse, autoroutes comprises (<span data-ter="autoroute">435</span> stations).</p>
+        </div>
+        <div class="card">
+          <h3>Repris d'autres sources</h3>
+          <p>Population, superficie, niveau de vie, équipement automobile et déplacements domicile-travail viennent de l'Insee. Le kilométrage moyen vient du SDES, la consommation moyenne des voitures du CCFA. Chaque valeur est recopiée avec sa source dans le fichier <a href="data/donnees_externes.json" download><code>donnees_externes.json</code></a>, et refaite en formules dans l'onglet «&nbsp;Territoire&nbsp;» du <a href="data/analyse_statistique_carburants.xlsx" download>classeur Excel</a>.</p>
+        </div>
+        <div class="card">
+          <h3>Les limites</h3>
+          <p>Le conducteur moyen est une hypothèse&nbsp;: en montagne ou loin des villes, on roule souvent plus. Les distances sont mesurées à vol d'oiseau. Les chiffres sur la voiture datent de 2017 et 2022, avant la crise. Et l'estimation de la baisse de consommation repose sur une élasticité nationale.</p>
+        </div>
+      </div>
+      <details class="data-table sources-list" style="margin-top:22px">
+        <summary>Voir toutes les sources</summary>
+        <ul id="sources-liste"></ul>
+      </details>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <h4>À la pompe</h4>
+      <p>Les prix des carburants en Corse, station par station, depuis avril 2025. Projet réalisé pour la SAÉ 303 «&nbsp;Concevoir des visualisations de données pour le web et un support animé&nbsp;».</p>
+    </div>
+    <div>
+      <h4>Données</h4>
+      <ul>
+        <li><a href="https://data.corsica/datasets/prix-des-carburants-j-1-avec-historique-en-corse">data.corsica · Prix des carburants J-1</a></li>
+        <li><a href="https://www.prix-carburants.gouv.fr/rubrique/opendata/">prix-carburants.gouv.fr · fichiers annuels 2025 et 2026</a></li>
+        <li><a href="https://www.insee.fr/">Insee · population, revenus, déplacements</a></li>
+        <li>Licence Ouverte 2.0 (Etalab)</li>
+        <li><a href="analyse.html#telechargements">Télécharger les données</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Réalisation</h4>
+      <ul>
+        <li>Amen Allah Aouni · BUT MMI 2</li>
+        <li>IUT de Corse, Università di Corsica</li>
+        <li>D3.js 7.9.1 · polices Barlow et DSEG7 (OFL)</li>
+      </ul>
+    </div>
+    <p class="legal">Les prix proviennent du flux public prix-carburants.gouv.fr, relayé par data.corsica jusqu'au 2 juin 2026&nbsp;; ils peuvent différer du prix payé à la pompe. Données au <span data-ap="date-fin">24 novembre 2026</span>. © <span data-annee>2026</span> Amen Allah Aouni.</p>
+  </div>
+</footer>
+<script src="js/vendor/d3.v7.9.1.min.js"></script>
+<script src="data/data.js"></script>
+<script src="data/corse-geo.js"></script>
+<script src="js/common.js"></script>
+<script src="js/territoire.js"></script>
+</body>
+</html>

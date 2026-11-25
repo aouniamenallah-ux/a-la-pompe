@@ -47,9 +47,12 @@ lignes = [
     (f"Fichier brut : {I['lignes_brutes']:,} lignes, {I['stations']} stations, du 20/02/2025 au {JJ(I['fin_corsica'])} (jeu gelé depuis).".replace(",", " "), F()),
     (f"Prolongement du {JJ(pd.Timestamp(I['fin_corsica']) + pd.Timedelta(days=1))} au {JJ(I['fin'])} : fichier annuel 2026 de prix-carburants.gouv.fr (Licence Ouverte 2.0), mêmes stations.", F()),
     ("https://donnees.roulez-eco.fr/opendata/annee/2026", F(color="0563C1", underline="single")),
+    ("Comparaison avec le continent : fichiers annuels 2025 et 2026 de prix-carburants.gouv.fr (toute la France). Données de cadrage : Insee, SDES, CCFA (sources dans l'onglet Territoire).", F()),
     ("Traitement : scripts analyse/extraction_national.py puis analyse/traitement.py (Python, pandas).", F()),
     ("", None),
     ("Contenu des onglets", F(bold=True)),
+    ("Territoire : densité des stations, budget carburant d'un conducteur moyen, écart avec le continent, estimation de la baisse de consommation (formules).", F()),
+    ("Départements : prix moyen du gazole des 96 départements et rang de chacun (fonction RANG), Corse-du-Sud et Haute-Corse en jaune.", F()),
     ("Panel gazole / Panel SP95 : prix de chaque station (colonnes) pour chaque jour (lignes), dernier prix connu reporté au plus " + str(I["peremption_jours"]) + " jours.", F()),
     ("Prix journaliers : moyenne, nombre de stations, minimum et maximum de chaque jour, calculés par formules à partir des panels.", F()),
     ("Stats descriptives : moyenne, médiane, quartiles, écart-type, variance, minimum, maximum par période et par carburant.", F()),
@@ -263,7 +266,145 @@ n1 = feuille_serie("Série double P1", "serie_double_gazole_sp95_P1.csv", "avant
 n2 = feuille_serie("Série double P2", "serie_double_gazole_sp95_P2.csv", "crise, 28 févr. - " + pd.Timestamp(I["fin"]).strftime("%d/%m/%Y"))
 
 # ordre des onglets : lisez-moi, séries doubles, stats, journaliers, panels
-ordre = ["Lisez-moi", "Série double P1", "Série double P2", "Stats descriptives", "Prix journaliers", "Panel gazole", "Panel SP95"]
+# ------------------------------------------------------------------ Territoire (croisement avec l'Insee et le continent)
+TER = I["territoire"]
+EXT = json.loads((RACINE / "analyse" / "donnees_externes.json").read_text(encoding="utf-8"))
+wt = wb.create_sheet("Territoire")
+wt["A1"] = "Croisements : stations, population, revenus, voiture et budget carburant"
+wt["A1"].font = F(bold=True, size=12)
+wt["A2"] = ("Texte bleu : valeurs recopiées des sources (colonne G) ou issues du traitement Python. Texte noir : formules. "
+            "Fond jaune : hypothèses modifiables et résultats clés.")
+wt["A2"].font = F(italic=True, size=9)
+
+
+def entete(ligne, titres):
+    for j, tt in enumerate(titres, start=1):
+        c = wt.cell(row=ligne, column=j, value=tt)
+        c.font = F(bold=True, color="FFFFFF"); c.fill = ENTETE; c.alignment = Alignment(wrap_text=True, vertical="center")
+    wt.row_dimensions[ligne].height = 28
+
+
+def ligne_t(r, libelle, valeurs, fmt_nb, source=None, jaune=False, formule=False):
+    wt.cell(row=r, column=1, value=libelle).font = F()
+    for j, v in enumerate(valeurs, start=2):
+        if v is None:
+            continue
+        c = wt.cell(row=r, column=j, value=v)
+        est_formule = isinstance(v, str) and v.startswith("=")
+        c.font = F() if est_formule else F(color=BLEU)
+        c.number_format = fmt_nb; c.border = CADRE
+        if jaune:
+            c.fill = JAUNE
+    if source:
+        c = wt.cell(row=r, column=7, value=source)
+        c.font = F(size=9, color="595959")
+
+
+pop, sup, nv, eq, dt = (EXT["population"]["valeurs"], EXT["superficie"]["valeurs"], EXT["niveau_de_vie"],
+                        EXT["equipement_auto"], EXT["domicile_travail"])
+entete(4, ["Données de cadrage", "Corse-du-Sud", "Haute-Corse", "Corse", "France métro.", "Unité", "Source"])
+ligne_t(5, "Population de référence 2023", [pop["2A"], pop["2B"], pop["corse"], pop["france_metro"], "habitants"], "#,##0", "Insee, populations de référence 2023")
+ligne_t(6, "Superficie", [sup["2A"], sup["2B"], sup["corse"], sup["france_metro"], "km²"], "#,##0", "IGN (La Corse en bref, Insee)")
+ligne_t(7, "Niveau de vie médian 2023", [nv["mediane"]["2A"], nv["mediane"]["2B"], nv["mediane"]["corse"], nv["mediane"]["france_metro"], "€ par an"], "#,##0", "Insee, Filosofi 2023")
+ligne_t(8, "Niveau de vie : 1er décile (10 % les plus modestes)", [nv["premier_decile"]["2A"], nv["premier_decile"]["2B"], nv["premier_decile"]["corse"], nv["premier_decile"]["france_metro"], "€ par an"], "#,##0", "Insee, Filosofi 2023")
+ligne_t(9, "Ménages ayant au moins une voiture (2022)", [eq["au_moins_une"][z] / 100 for z in ["2A", "2B", "corse", "france_metro"]] + ["% des ménages"], "0.0%", "Insee, RP 2022")
+ligne_t(10, "Ménages ayant deux voitures ou plus (2022)", [eq["deux_ou_plus"][z] / 100 for z in ["2A", "2B", "corse", "france_metro"]] + ["% des ménages"], "0.0%", "Insee, RP 2022")
+ligne_t(11, "Actifs allant travailler en voiture (2017)", [None, None, dt["voiture"]["corse"] / 100, dt["voiture"]["france"] / 100, "% des actifs"], "0.0%", "Insee Flash Corse n° 58 ; Insee Première n° 1835 (France entière)")
+ligne_t(12, "Actifs allant travailler en transports en commun", [None, None, dt["transports_en_commun"]["corse"] / 100, dt["transports_en_commun"]["france"] / 100, "% des actifs"], "0.0%", "ANFA, diagnostic régional Corse 2026")
+
+D = TER["densite"]
+entete(14, ["Densité des stations", "Corse-du-Sud", "Haute-Corse", "Corse", "Continent", "", "Source / calcul"])
+ligne_t(15, "Stations actives en 2026 (au moins un prix)", [D["2A"]["stations"], D["2B"]["stations"], "=B15+C15", D["continent"]["stations"]], "#,##0", "Traitement Python du fichier national (prix-carburants.gouv.fr)")
+ligne_t(16, "Population", ["=B5", "=C5", "=D5", "=E5-D5"], "#,##0", "Continent = France métropolitaine - Corse")
+ligne_t(17, "Superficie (km²)", ["=B6", "=C6", "=D6", "=E6-D6"], "#,##0", "Continent = France métropolitaine - Corse")
+ligne_t(18, "Stations pour 10 000 habitants", ["=B15/B16*10000", "=C15/C16*10000", "=D15/D16*10000", "=E15/E16*10000"], "0.00", None, jaune=True)
+ligne_t(19, "Stations pour 100 km²", ["=B15/B17*100", "=C15/C17*100", "=D15/D17*100", "=E15/E17*100"], "0.00", None, jaune=True)
+ligne_t(20, "Habitants par station", ["=B16/B15", "=C16/C15", "=D16/D15", "=E16/E15"], "#,##0")
+ligne_t(21, "Densité corse rapportée à celle du continent (par habitant)", [None, None, "=D18/E18"], "0.0")
+
+vt = EXT["voiture_type"]
+entete(23, ["Conducteur moyen (hypothèses)", "Valeur", "", "", "", "Unité", "Source"])
+ligne_t(24, "Kilomètres par an", [vt["km_par_an"], None, None, None, "km"], "#,##0", "SDES, kilométrage moyen 2025", jaune=True)
+ligne_t(25, "Consommation d'une voiture diesel", [vt["litres_100km"]["g"], None, None, None, "L/100 km"], "0.0", "CCFA 2025", jaune=True)
+ligne_t(26, "Consommation d'une voiture essence", [vt["litres_100km"]["s"], None, None, None, "L/100 km"], "0.0", "CCFA 2025", jaune=True)
+ligne_t(27, "Gazole consommé par an", ["=B24*B25/100", None, None, None, "litres"], "#,##0")
+ligne_t(28, "Essence consommée par an", ["=B24*B26/100", None, None, None, "litres"], "#,##0")
+
+PD, CI = TER["prix_dep"], TER["continent"]
+entete(30, ["Prix moyen du gazole (€/L)", "Corse-du-Sud", "Haute-Corse", "Corse", "Continent", "", "Source / calcul"])
+ligne_t(31, "Avant la crise (1er avril 2025 - 27 février 2026)", [PD["g"]["2A"]["p1"], PD["g"]["2B"]["p1"], PD["g"]["corse"]["p1"], CI["moyennes_avant"]["cont_g"]], "0.000", "Moyenne des prix journaliers (traitement Python)")
+ligne_t(32, f"Pendant la crise (28 février - {JJ(I['fin'])})", [PD["g"]["2A"]["p2"], PD["g"]["2B"]["p2"], PD["g"]["corse"]["p2"], CI["moyennes_crise"]["cont_g"]], "0.000", "Idem")
+ligne_t(33, f"Dernier jour ({JJ(I['fin'])})", [PD["g"]["2A"]["dernier"], PD["g"]["2B"]["dernier"], PD["g"]["corse"]["dernier"], None], "0.000", "Idem")
+entete(35, ["Budget gazole d'un conducteur moyen", "Corse-du-Sud", "Haute-Corse", "Corse", "Continent", "", "Calcul"])
+ligne_t(36, "Budget annuel avant la crise (€)", ["=$B$27*B31", "=$B$27*C31", "=$B$27*D31", "=$B$27*E31"], "#,##0", "litres par an × prix moyen")
+ligne_t(37, "Budget annuel pendant la crise (€)", ["=$B$27*B32", "=$B$27*C32", "=$B$27*D32", "=$B$27*E32"], "#,##0", "litres par an × prix moyen")
+ligne_t(38, "Surcoût annuel de la crise (€)", ["=B37-B36", "=C37-C36", "=D37-D36", "=E37-E36"], "#,##0", None, jaune=True)
+ligne_t(39, "Part du niveau de vie médian (crise)", ["=B37/B7", "=C37/C7", "=D37/D7", "=E37/E7"], "0.0%", "Continent : niveau de vie médian de la France métropolitaine", jaune=True)
+ligne_t(40, "En mois de niveau de vie médian", ["=B37/(B7/12)", "=C37/(C7/12)", "=D37/(D7/12)", "=E37/(E7/12)"], "0.00")
+ligne_t(41, "En mois de revenu pour le 1er décile (seuil Insee : 1 mois)", ["=B37/(B8/12)", "=C37/(C8/12)", "=D37/(D8/12)", "=E37/(E8/12)"], "0.00", None, jaune=True)
+ligne_t(42, "Kilomètres parcourus avec 50 € avant la crise", ["=50/B31/$B$25*100", "=50/C31/$B$25*100", "=50/D31/$B$25*100", "=50/E31/$B$25*100"], "#,##0")
+ligne_t(43, "Kilomètres parcourus avec 50 € le dernier jour", ["=50/B33/$B$25*100", "=50/C33/$B$25*100", "=50/D33/$B$25*100", None], "#,##0")
+
+entete(45, ["Corse et continent (gazole)", "Valeur", "", "", "", "Unité", "Calcul"])
+ligne_t(46, "Écart moyen avant la crise", ["=(D31-E31)*100", None, None, None, "ct/L"], "0.0", "Corse - continent", jaune=True)
+ligne_t(47, "Écart moyen pendant la crise", ["=(D32-E32)*100", None, None, None, "ct/L"], "0.0", "Corse - continent", jaune=True)
+ligne_t(48, "Surcoût insulaire annuel avant la crise", ["=B46/100*B27", None, None, None, "€ par an"], "#,##0", "écart × litres par an")
+ligne_t(49, "Surcoût insulaire annuel pendant la crise", ["=B47/100*B27", None, None, None, "€ par an"], "#,##0", "écart × litres par an")
+
+entete(51, ["Consommation : estimation par l'élasticité", "Valeur", "", "", "", "Unité", "Source / calcul"])
+ligne_t(52, "Élasticité de la consommation au prix", [EXT["elasticite_prix"]["valeur"], None, None, None, ""], "0.0", "Conseil des prélèvements obligatoires, juin 2026")
+ligne_t(53, "Hausse du prix moyen corse du gazole (crise / avant)", ["=D32/D31-1", None, None, None, "%"], "0.0%")
+ligne_t(54, "Baisse estimée de la consommation de gazole en Corse", ["=B53*B52", None, None, None, "%"], "0.0%", "Comparer : -7,5 % de livraisons de gazole en France sur neuf mois (CPDP)", jaune=True)
+wt["A56"] = "Sources détaillées : analyse/donnees_externes.json (adresse de chaque page) et page « Territoire » du site."
+wt["A56"].font = F(italic=True, size=9)
+wt.column_dimensions["A"].width = 56
+for col in "BCDE":
+    wt.column_dimensions[col].width = 15
+wt.column_dimensions["F"].width = 13
+wt.column_dimensions["G"].width = 60
+wt.freeze_panes = "B5"
+
+# ------------------------------------------------------------------ Départements (classement par formules RANG)
+dd = pd.read_csv(RACINE / "site" / "data" / "brut" / "national-france-departements.csv", dtype={"dep": str})
+from territoire import DEPARTEMENTS  # noqa: E402
+dd = dd[dd["dep"].isin(DEPARTEMENTS) & (dd["carburant"] == "Gazole") & (dd["stations"] >= 5)]
+tab = dd.pivot_table(index="dep", columns="periode", values="moyenne").reindex(columns=["avant_crise", "crise", "dernier_jour"])
+tab = tab.sort_index()
+wdp = wb.create_sheet("Départements")
+wdp["A1"] = "Prix moyen du gazole par département (€/L) et rang, du plus cher (1) au moins cher"
+wdp["A1"].font = F(bold=True, size=12)
+wdp["A2"] = "Source : prix-carburants.gouv.fr, fichiers annuels 2025 et 2026 ; département déduit du code postal ; départements d'au moins 5 stations."
+wdp["A2"].font = F(italic=True, size=9)
+tetes = ["Code", "Département", "Avant la crise", "Pendant la crise", "Dernier jour", "Rang avant", "Rang crise", "Rang dernier jour"]
+for j, tt in enumerate(tetes, start=1):
+    c = wdp.cell(row=4, column=j, value=tt); c.font = F(bold=True, color="FFFFFF"); c.fill = ENTETE
+n0, n1 = 5, 4 + len(tab)
+for i, (dep, r) in enumerate(tab.iterrows(), start=n0):
+    wdp.cell(row=i, column=1, value=dep).font = F()
+    wdp.cell(row=i, column=2, value=DEPARTEMENTS[dep]).font = F()
+    for j, per in enumerate(["avant_crise", "crise", "dernier_jour"], start=3):
+        if pd.notna(r[per]):
+            c = wdp.cell(row=i, column=j, value=round(float(r[per]), 5)); c.font = F(color=BLEU); c.number_format = "0.000"
+        lettre = get_column_letter(j)
+        c = wdp.cell(row=i, column=j + 3, value=f"=RANK({lettre}{i},${lettre}${n0}:${lettre}${n1},0)")
+        c.font = F(); c.number_format = "0"
+    if dep in ("2A", "2B"):
+        for j in range(1, 9):
+            wdp.cell(row=i, column=j).fill = JAUNE
+wdp["J4"] = "Résultats"; wdp["J4"].font = F(bold=True)
+for k, (lib, dep, col) in enumerate([("Rang de la Corse-du-Sud avant la crise", "2A", "F"), ("Rang de la Haute-Corse avant la crise", "2B", "F"),
+                                     ("Rang de la Corse-du-Sud pendant la crise", "2A", "G"), ("Rang de la Haute-Corse pendant la crise", "2B", "G")], start=5):
+    wdp.cell(row=k, column=10, value=lib).font = F()
+    c = wdp.cell(row=k, column=11, value=f'=INDEX({col}{n0}:{col}{n1},MATCH("{dep}",A{n0}:A{n1},0))'); c.font = F(); c.fill = JAUNE
+wdp.cell(row=9, column=10, value="Nombre de départements classés").font = F()
+wdp.cell(row=9, column=11, value=f"=COUNT(D{n0}:D{n1})").font = F()
+wdp.column_dimensions["B"].width = 26
+for col in "CDEFGH":
+    wdp.column_dimensions[col].width = 14
+wdp.column_dimensions["J"].width = 40
+wdp.freeze_panes = "C5"
+
+ordre = ["Lisez-moi", "Territoire", "Départements", "Série double P1", "Série double P2", "Stats descriptives", "Prix journaliers", "Panel gazole", "Panel SP95"]
 wb._sheets = [wb[n] for n in ordre]
 wb.active = 0
 wb.calculation.fullCalcOnLoad = True   # Excel et LibreOffice recalculent toutes les formules à l'ouverture

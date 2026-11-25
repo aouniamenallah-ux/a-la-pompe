@@ -369,3 +369,33 @@ th[aria-sort="descending"] button::after { content: "▼"; font-size: .7em; }
   body { background: #fff; }
   .chart-card, .kpi, .card { box-shadow: none; border: 1px solid #ddd; }
 }
+
+/* ---------- page Territoire ---------- */
+.kpis-flat { margin-top: 0; }
+/* distance à la station la plus proche : rampe ordinale à une teinte (bleu), validée en clair et en sombre */
+:root { --d0: #84b9f3; --d1: #338ced; --d2: #1b64be; --d3: #0e3d7e; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --d0: #1757ac; --d1: #257de0; --d2: #6aabf1; --d3: #b6d5f8; } }
+:root[data-theme="dark"] { --d0: #1757ac; --d1: #257de0; --d2: #6aabf1; --d3: #b6d5f8; }
+.commune-d { stroke: var(--surface); stroke-width: .6; }
+.st-point { stroke: var(--surface); stroke-width: 1.6; }
+.st-vide { fill: var(--surface); stroke: var(--ink-2); stroke-width: 1.6; }
+.st-acces { fill: var(--surface); stroke: var(--ink); stroke-width: 1.6; }
+.simu { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: 28px; align-items: start; }
+@media (max-width: 860px) { .simu { grid-template-columns: 1fr; } }
+.simu label { display: block; font-weight: 600; margin-bottom: 6px; }
+.simu .field + .field { margin-top: 18px; }
+.simu .ctl-label { margin: 0 0 6px; }
+.simu input[type="range"] { width: 100%; accent-color: var(--ink); }
+.simu .seg { flex-wrap: wrap; }
+.simu-out { display: grid; gap: 14px; }
+.simu-note { grid-column: 1 / -1; margin: 0; }
+table.duel td, table.duel th { white-space: normal; vertical-align: middle; }
+table.duel td.n { width: 22%; }
+table.duel td.src { color: var(--muted); font-size: .82rem; min-width: 12em; }
+.duel .val { display: grid; gap: 4px; justify-items: end; }
+.duel .bar { height: 6px; border-radius: 3px; background: var(--axis); justify-self: stretch; }
+.duel .bar i { display: block; height: 100%; border-radius: 3px; background: var(--ink-2); }
+.duel .plus-expose { font-weight: 600; }
+.sources-list ul { margin: 12px 0 0; padding-left: 1.2em; display: grid; gap: 6px; font-size: .92rem; }
+.sources-list a { color: var(--ink-2); }
+@media (max-width: 600px) { table.duel td.src, table.duel th:last-child { display: none; } table.duel td.n { width: 30%; } }

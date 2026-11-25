@@ -21,6 +21,7 @@
     <nav class="nav" id="nav" aria-label="Navigation principale">
       <a href="index.html">L'essentiel</a>
       <a href="stations.html">Stations &amp; carte</a>
+      <a href="territoire.html">Territoire</a>
       <a href="analyse.html" aria-current="page">Analyse statistique</a>
       <a href="communication.html">Communication</a>
       <button class="icon-btn theme-toggle" type="button" aria-label="Changer de thème"></button>
@@ -153,6 +154,8 @@
         <a class="dl" href="data/analyse_statistique_carburants.xlsx" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M4 9h16M4 15h16M10 3v18"/></svg><span>Classeur Excel de l'analyse<small>formules, régressions, graphiques</small></span></a>
         <a class="dl" href="data/traitement.py" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg><span>Script de traitement (Python)<small>pandas, numpy</small></span></a>
         <a class="dl" href="data/extraction_national.py" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg><span>Script d'extraction (Python)<small>fichier national, stations corses</small></span></a>
+        <a class="dl" href="data/territoire.py" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg><span>Script du croisement (Python)<small>densité, continent, budget (page Territoire)</small></span></a>
+        <a class="dl" href="data/donnees_externes.json" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5"/></svg><span>Données externes (JSON)<small>Insee, SDES, CCFA, avec leurs sources</small></span></a>
       </div>
     </div>
   </section>
@@ -168,7 +171,8 @@
       <h4>Données</h4>
       <ul>
         <li><a href="https://data.corsica/datasets/prix-des-carburants-j-1-avec-historique-en-corse">data.corsica · Prix des carburants J-1</a></li>
-        <li><a href="https://www.prix-carburants.gouv.fr/rubrique/opendata/">prix-carburants.gouv.fr · fichier annuel 2026</a></li>
+        <li><a href="https://www.prix-carburants.gouv.fr/rubrique/opendata/">prix-carburants.gouv.fr · fichiers annuels 2025 et 2026</a></li>
+        <li><a href="https://www.insee.fr/">Insee · population, revenus, déplacements</a></li>
         <li>Licence Ouverte 2.0 (Etalab)</li>
         <li><a href="analyse.html#telechargements">Télécharger les données</a></li>
       </ul>

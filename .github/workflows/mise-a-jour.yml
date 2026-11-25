@@ -1,6 +1,7 @@
 # Mise à jour quotidienne du site « À la pompe »
-# Chaque matin : téléchargement du fichier officiel des prix (prix-carburants.gouv.fr),
-# extraction des stations corses, recalcul des indicateurs et du classeur Excel,
+# Chaque matin : téléchargement des fichiers officiels des prix (prix-carburants.gouv.fr),
+# extraction des stations corses et des moyennes de la France entière, recalcul des
+# indicateurs, des croisements (page Territoire) et du classeur Excel,
 # puis publication du dossier site/ sur GitHub Pages.
 name: Mise à jour quotidienne
 
@@ -35,20 +36,21 @@ jobs:
       - name: Installer les dépendances
         run: pip install -r requirements.txt
 
-      - name: Télécharger le fichier annuel officiel
+      - name: Télécharger les fichiers annuels officiels (2025 et suivants)
         run: |
           mkdir -p /tmp/national
-          for an in $(seq 2026 "$(date +%Y)"); do
+          for an in $(seq 2025 "$(date +%Y)"); do
             if ! curl -fsSL --retry 5 --retry-delay 30 -A "Mozilla/5.0 (projet etudiant SAE 303)" \
                  -o "/tmp/national/PrixCarburants_annuel_$an.zip" "https://donnees.roulez-eco.fr/opendata/annee/$an"; then
               echo "Fichier $an indisponible pour le moment"
               rm -f "/tmp/national/PrixCarburants_annuel_$an.zip"
             fi
           done
+          test -f /tmp/national/PrixCarburants_annuel_2025.zip   # comparaison avec le continent avant la crise
           test -f /tmp/national/PrixCarburants_annuel_2026.zip
           ls -l /tmp/national
 
-      - name: Extraire les stations corses
+      - name: Extraire les stations corses et les moyennes de la France entière
         run: python analyse/extraction_national.py /tmp/national/*.zip
 
       - name: Recalculer les données et les indicateurs
@@ -58,7 +60,7 @@ jobs:
         run: |
           python analyse/classeur_excel.py
           cp analyse/analyse_statistique_carburants.xlsx site/data/
-          cp analyse/traitement.py analyse/extraction_national.py site/data/
+          cp analyse/traitement.py analyse/extraction_national.py analyse/territoire.py analyse/donnees_externes.json site/data/
 
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -24,8 +24,12 @@ import pandas as pd
 
 RACINE = Path(__file__).resolve().parent.parent
 BRUT = RACINE / "site" / "data" / "brut" / "prix-des-carburants-j-1-avec-historique-en-corse.csv"
-NAT_PRIX = sorted((RACINE / "site" / "data" / "brut").glob("national-*-corse-prix.csv"))       # un fichier par année
-NAT_RUPT = sorted((RACINE / "site" / "data" / "brut").glob("national-*-corse-ruptures.csv"))
+# fichiers nationaux corses, un par année ; pour la Corse, seuls ceux de 2026 et après servent
+# (avant 2026, data.corsica suffit ; le fichier 2025 n'est utile que pour la comparaison avec le continent)
+NAT_PRIX = sorted(f for f in (RACINE / "site" / "data" / "brut").glob("national-*-corse-prix.csv")
+                  if int(f.name.split("-")[1]) >= 2026)
+NAT_RUPT = sorted(f for f in (RACINE / "site" / "data" / "brut").glob("national-*-corse-ruptures.csv")
+                  if int(f.name.split("-")[1]) >= 2026)
 PROPRE = RACINE / "site" / "data" / "propre"
 PROPRE.mkdir(parents=True, exist_ok=True)
 
@@ -459,6 +463,13 @@ reperes = {
     "semaine_destockage": dict(date="2026-11-06", gazole=mg.loc["2026-11-06"], sp95=qs["moy"].loc["2026-11-06"]),
     "dernier": dict(date=str(FIN.date()), gazole=mg.iloc[-1], sp95=qs["moy"].iloc[-1]),
 } if FIN >= pd.Timestamp("2026-11-06") else {}
+# =====================================================================================
+# 11 bis. Croisements territoriaux : densité, enseignes, continent, budget (page Territoire)
+# =====================================================================================
+from territoire import calculer as calculer_territoire  # noqa: E402
+
+terr_ind, terr_site = calculer_territoire(quotidien, panel, stations, jours, DEBUT_CRISE, FIN, note)
+
 k_avant_g = periodes["P1"]["Gazole"]["fin"]
 k_pic_g = qg["moy"].loc[P2[0]:].max()
 indicateurs = {
@@ -487,6 +498,7 @@ indicateurs = {
     "periodes": periodes, "descriptives": desc, "dispersion": dispersion, "regression": regression, "regression_P2": regression2,
     "comparaisons": comparaisons, "plein_litres": PLEIN_L, "peremption_jours": PEREMPTION_JOURS, "reperes": reperes,
     "ruptures_mois": ruptures_mois.astype(int).to_dict(orient="index"),
+    "territoire": terr_ind,
     "journal": journal,
 }
 
@@ -597,7 +609,8 @@ data_site = {
     "serie_double": {"P1": [dict(id=int(sid), x=round(r.x, 4), y=round(r.y, 4)) for sid, r in serie.iterrows()],
                      "P2": [dict(id=int(sid), x=round(r.x, 4), y=round(r.y, 4)) for sid, r in serie2.iterrows()]},
     "boites": propre(boites),
-    "indicateurs": propre({k: v for k, v in indicateurs.items() if k not in ("journal", "anomalies")}),
+    "indicateurs": propre({k: v for k, v in indicateurs.items() if k not in ("journal", "anomalies", "territoire")}),
+    "territoire": propre(terr_site),
 }
 js = ("/* Données préparées par analyse/traitement.py - sources : data.corsica puis prix-carburants.gouv.fr, "
       "Licence Ouverte 2.0 */\n"

@@ -864,6 +864,350 @@
    "SP95": 0
   }
  },
+ "territoire": {
+  "densite": {
+   "2A": {
+    "stations": 59,
+    "population": 168306,
+    "superficie": 4014,
+    "par_10000_hab": 3.50552,
+    "par_100_km2": 1.46986,
+    "hab_par_station": 2852.64407,
+    "km2_par_station": 68.0339
+   },
+   "2B": {
+    "stations": 66,
+    "population": 187180,
+    "superficie": 4666,
+    "par_10000_hab": 3.52602,
+    "par_100_km2": 1.41449,
+    "hab_par_station": 2836.06061,
+    "km2_par_station": 70.69697
+   },
+   "corse": {
+    "stations": 125,
+    "population": 355486,
+    "superficie": 8680,
+    "par_10000_hab": 3.51631,
+    "par_100_km2": 1.44009,
+    "hab_par_station": 2843.888,
+    "km2_par_station": 69.44
+   },
+   "continent": {
+    "stations": 9676,
+    "population": 65810329,
+    "superficie": 535285,
+    "par_10000_hab": 1.47029,
+    "par_100_km2": 1.80764,
+    "hab_par_station": 6801.3982,
+    "km2_par_station": 55.3209,
+    "autoroute": 435
+   }
+  },
+  "acces": {
+   "corse": {
+    "communes": 360,
+    "avec_station": 59,
+    "loin": 48,
+    "part_loin": 13.33333,
+    "aire": 8669.92443,
+    "part_aire_loin": 16.07449,
+    "km_median": 5.8,
+    "km_max": 15.3,
+    "commune_max": "Guagno"
+   },
+   "2A": {
+    "communes": 124,
+    "avec_station": 28,
+    "loin": 10,
+    "part_loin": 8.06452,
+    "aire": 3973.78272,
+    "part_aire_loin": 12.11752,
+    "km_median": 5.2,
+    "km_max": 15.3,
+    "commune_max": "Guagno"
+   },
+   "2B": {
+    "communes": 236,
+    "avec_station": 31,
+    "loin": 38,
+    "part_loin": 16.10169,
+    "aire": 4696.14171,
+    "part_aire_loin": 19.4228,
+    "km_median": 6.25,
+    "km_max": 14.2,
+    "commune_max": "Pietraserena"
+   }
+  },
+  "enseignes": {
+   "par_dep": {
+    "2A": {
+     "VITO": 28,
+     "TotalEnergies": 23,
+     "ENI": 4,
+     "Non renseignée": 4
+    },
+    "2B": {
+     "VITO": 25,
+     "TotalEnergies": 17,
+     "Non renseignée": 15,
+     "ENI": 7,
+     "Indépendant sans enseigne": 2
+    },
+    "corse": {
+     "VITO": 53,
+     "TotalEnergies": 40,
+     "Non renseignée": 19,
+     "ENI": 11,
+     "Indépendant sans enseigne": 2
+    }
+   },
+   "epci_une_seule": 4,
+   "epci": 18
+  },
+  "continent": {
+   "debut": "2025-04-01",
+   "stations_continent": 9470,
+   "controle_ecart_max_cts": 0.39935,
+   "ecart_avant": {
+    "g": 11.08103,
+    "s": 9.01705
+   },
+   "ecart_crise": {
+    "g": 1.41494,
+    "s": -3.26831
+   },
+   "ecart_dernier": {
+    "g": 10.35372,
+    "s": -0.41972
+   },
+   "ecart_max": {
+    "g": {
+     "cts": 17.45946,
+     "date": "2025-12-19"
+    },
+    "s": {
+     "cts": 14.95715,
+     "date": "2025-12-19"
+    }
+   },
+   "ecart_min": {
+    "g": {
+     "cts": -10.68171,
+     "date": "2026-10-29"
+    },
+    "s": {
+     "cts": -11.42157,
+     "date": "2026-09-17"
+    }
+   },
+   "jours_corse_moins_chere": {
+    "g": 104,
+    "s": 204
+   },
+   "jours_crise": 270,
+   "bascule": {
+    "g": "2026-03-04",
+    "s": "2026-03-21"
+   },
+   "septembre": {
+    "g": {
+     "corse": 2.28394,
+     "continent": 2.33533,
+     "ecart_cts": -5.13891
+    },
+    "s": {
+     "corse": 2.08113,
+     "continent": 2.17618,
+     "ecart_cts": -9.50545
+    }
+   },
+   "destockage": {
+    "g": {
+     "corse_cts": -5.35576,
+     "continent_cts": -25.323
+    },
+    "s": {
+     "corse_cts": -8.27996,
+     "continent_cts": -14.432
+    }
+   },
+   "veille_destockage": "2026-10-31",
+   "moyennes_crise": {
+    "corse_g": 2.18622,
+    "cont_g": 2.17207,
+    "corse_s": 2.0289,
+    "cont_s": 2.06158,
+    "cont_e10": 2.0121
+   },
+   "moyennes_avant": {
+    "corse_g": 1.74316,
+    "cont_g": 1.63235,
+    "corse_s": 1.82386,
+    "cont_s": 1.73369,
+    "cont_e10": 1.69057
+   }
+  },
+  "classement": {
+   "g": {
+    "avant_crise": {
+     "rang_2A": 2,
+     "rang_2B": 3,
+     "departements": 96
+    },
+    "crise": {
+     "rang_2A": 36,
+     "rang_2B": 15,
+     "departements": 96
+    },
+    "dernier_jour": {
+     "rang_2A": 2,
+     "rang_2B": 3,
+     "departements": 96
+    }
+   },
+   "s": {
+    "avant_crise": {
+     "rang_2A": 2,
+     "rang_2B": 3,
+     "departements": 96
+    },
+    "crise": {
+     "rang_2A": 96,
+     "rang_2B": 85,
+     "departements": 96
+    },
+    "dernier_jour": {
+     "rang_2A": 42,
+     "rang_2B": 54,
+     "departements": 94
+    }
+   }
+  },
+  "prix_dep": {
+   "g": {
+    "2A": {
+     "p1": 1.74583,
+     "p2": 2.17988,
+     "dernier": 2.22227,
+     "pic": 2.30389
+    },
+    "2B": {
+     "p1": 1.74029,
+     "p2": 2.19296,
+     "dernier": 2.21869,
+     "pic": 2.3166
+    },
+    "corse": {
+     "p1": 1.74316,
+     "p2": 2.18622,
+     "dernier": 2.22055,
+     "pic": 2.30975
+    }
+   },
+   "s": {
+    "2A": {
+     "p1": 1.82645,
+     "p2": 2.02361,
+     "dernier": 2.02853,
+     "pic": 2.11267
+    },
+    "2B": {
+     "p1": 1.82108,
+     "p2": 2.03455,
+     "dernier": 2.01902,
+     "pic": 2.12373
+    },
+    "corse": {
+     "p1": 1.82386,
+     "p2": 2.0289,
+     "dernier": 2.02395,
+     "pic": 2.11532
+    }
+   }
+  },
+  "budget": {
+   "g": {
+    "litres": 684.4,
+    "conso": 5.9,
+    "corse": {
+     "p1": 1193.01944,
+     "p2": 1496.24692,
+     "dernier": 1519.74248,
+     "pic": 1580.79453
+    },
+    "surcout_crise": 303.22748,
+    "surcout_insulaire_crise": 9.68386,
+    "surcout_insulaire_avant": 75.83859,
+    "continent_crise": 1486.56306,
+    "km_50e": {
+     "p1": 486.1614,
+     "pic": 366.9041,
+     "dernier": 381.64361
+    },
+    "hausse_prix_pct": 25.41681,
+    "baisse_conso_estimee_pct": -7.62504,
+    "par_dep": {
+     "2A": {
+      "budget_p2": 1491.9075,
+      "surcout": 297.05891,
+      "part_mediane": 5.72709,
+      "part_d1": 12.01214,
+      "mois_mediane": 0.68725,
+      "mois_d1": 1.44146
+     },
+     "2B": {
+      "budget_p2": 1500.86434,
+      "surcout": 309.80685,
+      "part_mediane": 6.20192,
+      "part_d1": 12.75161,
+      "mois_mediane": 0.74423,
+      "mois_d1": 1.53019
+     }
+    }
+   },
+   "s": {
+    "litres": 777.2,
+    "conso": 6.7,
+    "corse": {
+     "p1": 1417.5077,
+     "p2": 1576.85833,
+     "dernier": 1573.01614,
+     "pic": 1644.02966
+    },
+    "surcout_crise": 159.35063,
+    "surcout_insulaire_crise": -25.4013,
+    "surcout_insulaire_avant": 70.0805,
+    "continent_crise": 1602.25963,
+    "km_50e": {
+     "p1": 409.16885,
+     "pic": 352.79169,
+     "dernier": 368.7184
+    },
+    "hausse_prix_pct": 11.24161,
+    "baisse_conso_estimee_pct": -3.37248,
+    "par_dep": {
+     "2A": {
+      "budget_p2": 1572.75104,
+      "surcout": 153.2323,
+      "part_mediane": 6.03743,
+      "part_d1": 12.66305,
+      "mois_mediane": 0.72449,
+      "mois_d1": 1.51957
+     },
+     "2B": {
+      "budget_p2": 1581.25513,
+      "surcout": 165.91196,
+      "part_mediane": 6.53411,
+      "part_d1": 13.43462,
+      "mois_mediane": 0.78409,
+      "mois_d1": 1.61215
+     }
+    }
+   }
+  },
+  "seuil_km": 10
+ },
  "journal": [
   "Fichier brut : 6760 lignes, 27 colonnes, 108 stations",
   "496 lignes en double (même station, même horodatage) fusionnées : 6264 mises à jour distinctes",
@@ -875,6 +1219,12 @@
   "Panel journalier du 2025-04-01 au 2026-11-24 (603 jours) : 63294 prix gazole et 63294 prix SP95 station×jour (report du dernier prix connu, périmé après 120 jours)",
   "Série double (P1) : 97 stations ; r = 0.989 ; r² = 0.977 ; y = 0.913x + 0.233 (moindres carrés de y en x)",
   "Série double (P2) : 105 stations ; r = 0.927 ; r² = 0.860 ; y = 1.167x + -0.523 (moindres carrés de y en x)",
-  "Jours où le plus de stations ont changé leur prix du gazole : 2026-03-04 (55), 2026-06-01 (52), 2026-03-06 (49), 2025-06-23 (49), 2026-07-17 (48), 2026-05-26 (46), 2026-05-30 (45), 2026-03-24 (44)"
+  "Jours où le plus de stations ont changé leur prix du gazole : 2026-03-04 (55), 2026-06-01 (52), 2026-03-06 (49), 2025-06-23 (49), 2026-07-17 (48), 2026-05-26 (46), 2026-05-30 (45), 2026-03-24 (44)",
+  "Densité : 125 stations actives en Corse (59 en Corse-du-Sud, 66 en Haute-Corse), 9676 sur le continent ; 3.52 stations pour 10 000 habitants en Corse contre 1.47 sur le continent",
+  "Accès : 59 communes sur 360 ont une station ; 48 communes (13 %) ont leur centre à plus de 10 km d'une station (record : Guagno, 15.3 km) ; superficie des communes recalculée : 3974 km² (2A) et 4696 km² (2B)",
+  "Enseignes : {'VITO': 53, 'TotalEnergies': 40, 'Non renseignée': 19, 'ENI': 11, 'Indépendant sans enseigne': 2} ; 4 intercommunalités sur 18 n'ont qu'une enseigne",
+  "Corse - continent (depuis le 2025-04-01, 9470 stations continentales) : gazole +11.1 ct avant la crise, +1.4 ct pendant ; SP95 +9.0 ct puis -3.3 ct ; contrôle de la moyenne corse recalculée sur le fichier national : 0.40 ct d'écart au plus",
+  "Classement des départements (gazole, crise) : Corse-du-Sud 36e, Haute-Corse 15e sur 96 (du plus cher au moins cher)",
+  "Budget gazole d'un conducteur moyen (11600 km, 5.9 L/100) : 1193 € par an avant la crise, 1496 € au prix moyen de la crise (+303 €) ; 6.2 % du niveau de vie médian en Haute-Corse, 5.7 % en Corse-du-Sud"
  ]
 }

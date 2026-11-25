@@ -1,0 +1,105 @@
+{
+  "_lisezmoi": "Données externes croisées avec les prix (page Territoire). Chaque valeur est recopiée de la source citée ; les calculs (densités, budgets, parts) sont faits dans traitement.py et dans l'onglet « Territoire » du classeur Excel.",
+  "population": {
+    "libelle": "Population de référence au 1er janvier 2023",
+    "unite": "habitants",
+    "valeurs": {"2A": 168306, "2B": 187180, "corse": 355486, "france_metro": 66165815},
+    "sources": [
+      {"titre": "Insee Flash Corse n° 101, Populations de référence 2023 (décembre 2025)", "url": "https://www.insee.fr/fr/statistiques/fichier/8684278/co_inf_101.pdf"},
+      {"titre": "Insee Focus n° 374, Les populations de référence des communes au 1er janvier 2023", "url": "https://www.insee.fr/fr/statistiques/8682718"}
+    ]
+  },
+  "superficie": {
+    "libelle": "Superficie (IGN)",
+    "unite": "km²",
+    "valeurs": {"2A": 4014, "2B": 4666, "corse": 8680, "france_metro": 543965},
+    "sources": [{"titre": "La Corse en bref, édition 2015 (Insee, DRAAF), superficie IGN", "url": "https://draaf.corse.agriculture.gouv.fr/IMG/pdf/Corse_en_bref_Edition_2015_cle423859.pdf"}]
+  },
+  "niveau_de_vie": {
+    "libelle": "Niveau de vie annuel en 2023 (par unité de consommation)",
+    "unite": "€ par an",
+    "mediane": {"2A": 26050, "2B": 24200, "corse": 25020, "france_metro": 25920},
+    "premier_decile": {"2A": 12420, "2B": 11770, "corse": 12050, "france_metro": 13200},
+    "sources": [{"titre": "Insee, Niveau de vie en 2023, comparaisons régionales et départementales (Filosofi 2023)", "url": "https://www.insee.fr/fr/statistiques/2012717"}]
+  },
+  "equipement_auto": {
+    "libelle": "Équipement automobile des ménages en 2022",
+    "unite": "% des ménages",
+    "au_moins_une": {"2A": 89.7, "2B": 87.6, "corse": 88.6, "france_metro": 81.4},
+    "deux_ou_plus": {"2A": 40.2, "2B": 35.7, "corse": 37.8, "france_metro": 34.7},
+    "sources": [{"titre": "Insee, Équipement automobile des ménages en 2022, comparaisons régionales et départementales (RP 2022)", "url": "https://www.insee.fr/fr/statistiques/2012694"}]
+  },
+  "domicile_travail": {
+    "libelle": "Mode de transport principal pour aller travailler",
+    "unite": "% des actifs en emploi",
+    "voiture": {"corse": 85.5, "province": 82.0, "france": 74, "annee": 2017, "champ": "actifs qui se déplacent pour aller travailler"},
+    "transports_en_commun": {"corse": 2.3, "france": 15.2, "annee": "recensement le plus récent (ANFA 2026)"},
+    "notes": "Voiture : la Corse est 3e des régions de province, 3,5 points au-dessus de la moyenne de province (Insee). Transports en commun : diagnostic régional ANFA 2026 (recensement de la population). En 2022, 82,3 % de l'ensemble des actifs corses en emploi, y compris ceux qui ne se déplacent pas, vont travailler en voiture et 2,3 % en transports en commun (Insee, RP 2022).",
+    "sources": [
+      {"titre": "Insee Flash Corse n° 58, Des trajets courts pour se rendre au travail mais la voiture reste reine (2021)", "url": "https://www.insee.fr/fr/statistiques/5012292"},
+      {"titre": "Insee Première n° 1835, La voiture reste majoritaire pour les déplacements domicile-travail (2021)", "url": "https://www.insee.fr/fr/statistiques/5013868"},
+      {"titre": "ANFA, Diagnostic régional Corse 2026", "url": "https://www.anfa-auto.fr/sites/default/files/2026-06/Diag%20r%C3%A9gional%20Corse%202026.pdf"},
+      {"titre": "Insee, Caractéristiques de l'emploi en 2022, région Corse (ACT G2)", "url": "https://www.insee.fr/en/statistiques/8574006?geo=REG-94"}
+    ]
+  },
+  "voiture_type": {
+    "libelle": "Hypothèses du conducteur moyen",
+    "km_par_an": 11600,
+    "litres_100km": {"g": 5.9, "s": 6.7},
+    "sources": [
+      {"titre": "SDES, 40 millions de voitures en circulation au 1er janvier 2026 (kilométrage moyen 2025 : 11 600 km)", "url": "https://www.statistiques.developpement-durable.gouv.fr/40-millions-de-voitures-en-circulation-en-france-au-1er-janvier-2026"},
+      {"titre": "CCFA, L'industrie automobile française, édition 2025 (consommation unitaire : 5,9 L/100 km diesel, 6,7 L/100 km essence)", "url": "https://ccfa.fr/wp-content/uploads/2026/05/CCFA-2025-FR-53-54.pdf"}
+    ]
+  },
+  "elasticite_prix": {
+    "libelle": "Élasticité de la consommation de carburant au prix",
+    "valeur": -0.3,
+    "notes": "Une hausse du prix de 1 % entraîne une baisse de la consommation de 0,3 % (Conseil des prélèvements obligatoires, juin 2026, cité par l'Assemblée nationale).",
+    "sources": [{"titre": "Assemblée nationale, document n° 929 (17e législature), citant le CPO, Quel avenir pour la fiscalité de l'énergie ? (juin 2026)", "url": "https://www.assemblee-nationale.fr/dyn/17/documents/tax carbu/l17n929420634_document"}]
+  },
+  "consommation_france_2026": {
+    "libelle": "Recul des livraisons de carburants routiers en France en 2026, sur un an",
+    "unite": "%",
+    "valeurs": {"avril": -11, "mai": -12, "neuf_mois": -4.8, "neuf_mois_gazole": -7.5},
+    "notes": "Certaines stations ont perdu 20 à 40 % de leurs ventes en octobre 2026 (Mobilians).",
+    "sources": [
+      {"titre": "AFP / Connaissance des énergies, Prix élevés : la consommation de carburants recule fortement en avril (Bercy)", "url": "https://www.connaissancedesenergies.org/afp/prix-eleves-la-consommation-de-carburants-recule-fortement-en-avril-en-france-selon-bercy-260506"},
+      {"titre": "prix-carburant.eu, la consommation chute de 12 % en mai 2026 (Douanes)", "url": "https://prix-carburant.eu/article/consommation-carburant-chute-mai-2026"},
+      {"titre": "Économie Matin, Carburant : après la flambée des prix, la consommation chute (CPDP, 28 octobre 2026)", "url": "https://www.economiematin.fr/?p=235918"},
+      {"titre": "AFP / Connaissance des énergies, Le gazole amorce sa baisse après le déstockage (3 novembre 2026)", "url": "https://www.connaissancedesenergies.org/afp/carburants-le-gazole-amorce-sa-baisse-apres-le-destockage-261103"}
+    ]
+  },
+  "budget_menages": {
+    "libelle": "Poids du carburant dans le budget des ménages",
+    "notes": "France : en 2021, 10,6 % des ménages motorisés dépensaient plus d'un mois de revenu par an en carburant ; aux prix du printemps 2026, ils seraient plus de deux fois plus nombreux (Insee Première n° 2125, septembre 2026). Corse : en 2008, plus du quart des ménages consacraient au moins un demi-mois de revenu au carburant, la part la plus forte des régions françaises (Insee Analyses Corse n° 5, 2015).",
+    "sources": [
+      {"titre": "Insee Première n° 2125, Les dépenses de carburant pèsent davantage sur le budget des ménages ruraux (septembre 2026)", "url": "https://insee.fr/fr/statistiques/9037833"},
+      {"titre": "Insee Analyses Corse n° 5, Le carburant pèse fortement dans le budget des ménages corses (2015)", "url": "https://www.insee.fr/fr/statistiques/1288192"}
+    ]
+  },
+  "marche_corse": {
+    "libelle": "Organisation du marché corse",
+    "notes": "Trois opérateurs seulement (Total, Rubis/Vito et Esso/Ferrandi selon l'Autorité de la concurrence ; enseignes VITO, TotalEnergies et ENI dans les données) ; aucune grande surface ne vend de carburant, faute de maîtriser son importation, alors que 70 % du carburant se vend en grande surface sur le continent ; deux dépôts pétroliers (Ajaccio et Lucciana).",
+    "sources": [
+      {"titre": "Assemblée nationale, question écrite n° 14856 et réponse du ministre (16e législature)", "url": "https://questions.assemblee-nationale.fr/dyn/16/questions/QANR5L16QE14856.pdf"},
+      {"titre": "Collectivité de Corse, document de l'Assemblée de Corse sur les carburants (2026)", "url": "https://www.isula.corsica/attachment/2859798"},
+      {"titre": "Autorité de la concurrence, avis 20-A-11 sur la concentration des marchés en Corse (2020)", "url": "https://www.autoritedelaconcurrence.fr/en/opinion/level-market-concentration-corsica-and-its-impact-local-competition"},
+      {"titre": "Autorité de la concurrence, décision 25-D-07 (novembre 2025)", "url": "https://www.autoritedelaconcurrence.fr/en/press-release/fuel-products-corsica-autorite-imposes-fine-eu1875-million-totalenergies-marketing"}
+    ]
+  },
+  "consommation_corse": {
+    "libelle": "Carburants consommés en Corse",
+    "notes": "En 2020, plus de 173 millions de litres de gazole et plus de 83 millions de litres de SP95 (année marquée par la crise sanitaire : −16 à −17 % par rapport à 2019). La consommation connaît un pic estival très marqué (tourisme).",
+    "sources": [
+      {"titre": "Collectivité de Corse, rapport n° 2022/E4/212 à l'Assemblée de Corse", "url": "https://www.isula.corsica/assemblea/docs/rapports/2022E4212.pdf"},
+      {"titre": "DREAL Corse, Bilan énergétique en Corse 2021", "url": "https://www.corse.developpement-durable.gouv.fr/IMG/pdf/2022_e_p_scil_bilan_annuel_2021-2.pdf"}
+    ]
+  },
+  "temoignages_2026": {
+    "notes": "ADEC : en septembre 2026, les prix moyens corses passent sous ceux du continent. Collectif contre la cherté des carburants (9 novembre 2026) : depuis le déstockage, −18,9 ct en moyenne sur le continent contre −2,6 ct en Corse.",
+    "sources": [
+      {"titre": "Corse Net Infos, Carburants : la Corse passe sous le continent mais le plein reste très cher", "url": "https://www.corsenetinfos.corsica/Carburants-La-Corse-passe-sous-le-continent-mais-le-plein-reste-tres-cher_a93391.html"},
+      {"titre": "Corse Net Infos, le collectif contre la cherté des carburants interpelle le préfet (9 novembre 2026)", "url": "https://www.corsenetinfos.corsica/Prix-du-carburant-en-Corse-le-collectif-contre-la-cherte-des-carburants-interpelle-le-prefet_a93588.html"}
+    ]
+  }
+}
