@@ -7,7 +7,6 @@
   "use strict";
   const { D, fmt, parseJour, css, showTip, hideTip, equiperCarte, surRedimension, premiereVue, segmente, barreH, reduit, el } = window.AP;
   const T = D.territoire, E = T.externe, C = T.continent, I = C.ind;
-  const G = window.CORSE_GEO;
   const nb = " ";
   const dec = (v, d = 1) => fmt.dec(v, d);
   const pct = (v, d = 1) => (Number.isInteger(v) && d === 1 ? String(v) : dec(v, d)) + nb + "%";
@@ -125,80 +124,54 @@
     });
   }
 
-  /* ---------- 2. carte de l'accès aux stations ---------- */
+  /* ---------- 2. accès aux stations (barres empilées) ---------- */
   const CLASSES = [{ max: 3, lib: "jusqu'à 3 km", v: "var(--d0)" }, { max: 6, lib: "de 3 à 6 km", v: "var(--d1)" },
     { max: 10, lib: "de 6 à 10 km", v: "var(--d2)" }, { max: Infinity, lib: "plus de 10 km", v: "var(--d3)" }];
   const classe = km => CLASSES.findIndex(c => km <= c.max);
   function acces() {
     const box = document.getElementById("acces"), carteEl = document.getElementById("carte-acces");
     const leg = document.getElementById("acces-legende"), stats = document.getElementById("acces-stats"), note = document.getElementById("acces-note");
-    const loc = { mode: "distance" };
-    const parCode = new Map(T.communes.map(c => [c.c, c]));
-    let communes, points;
-    function legende() {
-      if (loc.mode === "distance") {
-        leg.innerHTML = CLASSES.map(c => `<span><i class="key key-sq" style="background:${c.v}"></i>${c.lib}</span>`).join("")
-          + `<span><i class="key key-ci" style="background:var(--surface);box-shadow:inset 0 0 0 2px var(--ink)"></i>station active en 2026</span>`;
-      } else leg.innerHTML = ORDRE.filter(m => m !== "Indépendant sans enseigne").map(cleLegende).join("")
-        .replace("Enseigne non renseignée", "Indépendante ou non renseignée");
-    }
-    function chiffres() {
-      const bloc = (k, v, w) => `<div class="day-stat"><div class="k">${k}</div><div class="v">${v}</div>${w ? `<div class="w">${w}</div>` : ""}</div>`;
-      if (loc.mode === "distance") {
-        stats.innerHTML = bloc("Communes ayant au moins une station", `${acc.corse.avec_station}${nb}<small>sur ${acc.corse.communes}</small>`,
-          `Corse-du-Sud ${acc["2A"].avec_station} sur ${acc["2A"].communes}, Haute-Corse ${acc["2B"].avec_station} sur ${acc["2B"].communes}`)
-          + bloc(`Communes à plus de ${T.seuil}${nb}km d'une station`, `${acc.corse.loin}${nb}<small>(${pct(acc.corse.part_loin, 0)})</small>`,
-            `${pct(acc["2A"].part_loin, 0)} en Corse-du-Sud, ${pct(acc["2B"].part_loin, 0)} en Haute-Corse`)
-          + bloc(`Part du territoire à plus de ${T.seuil}${nb}km`, pct(acc.corse.part_aire_loin, 0),
-            `${pct(acc["2A"].part_aire_loin, 0)} en Corse-du-Sud, ${pct(acc["2B"].part_aire_loin, 0)} en Haute-Corse`)
-          + bloc("Commune la plus éloignée", `${acc.corse.commune_max}`, `${dec(acc.corse.km_max)}${nb}km à vol d'oiseau · distance médiane ${dec(acc.corse.km_median)}${nb}km`);
-        note.textContent = `Seules ${acc.corse.avec_station} communes sur ${acc.corse.communes} ont une station : dans les ${acc.corse.communes - acc.corse.avec_station} autres, il faut prendre la route pour faire le plein. La Haute-Corse compte plus de villages de montagne éloignés d'une station.`;
-      } else {
-        const p = T.enseignes.par_dep.corse;
-        stats.innerHTML = ORDRE.filter(m => p[m]).map(m => bloc(m === "Non renseignée" ? "Enseigne non renseignée" : LIB(m), String(p[m]),
-          `Corse-du-Sud ${T.enseignes.par_dep["2A"][m] || 0} · Haute-Corse ${T.enseignes.par_dep["2B"][m] || 0}`)).join("");
-        note.textContent = `Enseigne connue pour les ${dens.corse.stations - (p["Non renseignée"] || 0)} stations présentes dans le jeu data.corsica. Les ${p["Non renseignée"] || 0} autres n'apparaissent que dans le fichier national, qui ne donne pas l'enseigne.`;
-      }
-    }
+    const zones = [["2A", "Corse-du-Sud"], ["2B", "Haute-Corse"], ["corse", "Corse"]];
+    const sel = z => (z === "corse" ? T.communes : T.communes.filter(c => c.d === z));
+    const comptes = z => { const l = sel(z), n = CLASSES.map(() => 0); l.forEach(c => n[classe(c.km)]++); return { n, tot: l.length }; };
+    leg.innerHTML = CLASSES.map(c => `<span><i class="key key-sq" style="background:${c.v}"></i>${c.lib}</span>`).join("");
+    const bloc = (k, v, w) => `<div class="day-stat"><div class="k">${k}</div><div class="v">${v}</div>${w ? `<div class="w">${w}</div>` : ""}</div>`;
+    stats.innerHTML = bloc("Communes ayant au moins une station", `${acc.corse.avec_station}${nb}<small>sur ${acc.corse.communes}</small>`,
+      `Corse-du-Sud ${acc["2A"].avec_station} sur ${acc["2A"].communes}, Haute-Corse ${acc["2B"].avec_station} sur ${acc["2B"].communes}`)
+      + bloc(`Communes à plus de ${T.seuil}${nb}km d'une station`, `${acc.corse.loin}${nb}<small>(${pct(acc.corse.part_loin, 0)})</small>`,
+        `${pct(acc["2A"].part_loin, 0)} en Corse-du-Sud, ${pct(acc["2B"].part_loin, 0)} en Haute-Corse`)
+      + bloc("Commune la plus éloignée", `${acc.corse.commune_max}`, `${dec(acc.corse.km_max)}${nb}km à vol d'oiseau · distance médiane ${dec(acc.corse.km_median)}${nb}km`);
+    note.textContent = `Seules ${acc.corse.avec_station} communes sur ${acc.corse.communes} ont une station : dans les ${acc.corse.communes - acc.corse.avec_station} autres, il faut prendre la route pour faire le plein. La Haute-Corse compte plus de villages de montagne éloignés d'une station.`;
     function construire() {
       box.replaceChildren();
-      const W = box.clientWidth, H = Math.round(Math.min(660, Math.max(440, W * 1.3)));
-      const proj = d3.geoMercator().fitExtent([[14, 14], [W - 14, H - 14]], G.contour);
-      const path = d3.geoPath(proj);
+      const W = box.clientWidth, lh = 64, m = { t: 22, r: 12, b: 8, l: W < 520 ? 96 : 128 };
+      const H = m.t + m.b + zones.length * lh;
+      const x = d3.scaleLinear().domain([0, 100]).range([m.l, W - m.r]);
       const svg = d3.select(box).append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("width", W).attr("height", H);
-      communes = svg.append("g").selectAll("path").data(G.communes.features).join("path").attr("class", "commune-d").attr("d", path)
-        .on("pointermove", (e, f) => {
-          const c = parCode.get(f.properties.code);
-          if (!c) return;
-          showTip(e, c.n, [{ key: "Station la plus proche", val: dec(c.km) + nb + "km" },
-            { key: "Stations à moins de 10 km", val: String(c.n10) }, { key: "Stations dans la commune", val: String(c.s) }],
-          NOMS_DEP[c.d] + " · à vol d'oiseau");
-        })
-        .on("pointerleave", hideTip);
-      svg.append("g").selectAll("path").data(G.departements.features).join("path").attr("class", "dep-line").attr("d", path).attr("pointer-events", "none");
-      svg.append("text").attr("class", "label-muted").attr("x", W < 500 ? 16 : W - 16).attr("y", 26).attr("text-anchor", W < 500 ? "start" : "end").text("Haute-Corse (2B)");
-      svg.append("text").attr("class", "label-muted").attr("x", 16).attr("y", H - 18).text("Corse-du-Sud (2A)");
-      points = svg.append("g").selectAll("circle").data(T.stations.map(s => ({ s, xy: proj([s.lon, s.lat]) }))).join("circle")
-        .attr("cx", d => d.xy[0]).attr("cy", d => d.xy[1])
-        .on("pointermove", (e, d) => showTip(e, d.s.v || "Station", [{ key: "Enseigne", val: d.s.m ? LIB(d.s.m) : "non renseignée" }], NOMS_DEP[d.s.dep]))
-        .on("pointerleave", hideTip);
-      maj();
-    }
-    function maj() {
-      const dist = loc.mode === "distance";
-      communes.style("fill", f => { const c = parCode.get(f.properties.code); return dist && c ? CLASSES[classe(c.km)].v : "var(--surface-2)"; });
-      points.attr("r", dist ? 3.4 : 5.2).attr("class", d => (dist ? "st-acces" : COUL[d.s.m] && d.s.m !== "Indépendant sans enseigne" ? "st-point" : "st-vide"))
-        .style("fill", d => (dist ? null : COUL[d.s.m] && d.s.m !== "Indépendant sans enseigne" ? COUL[d.s.m] : null));
-      legende(); chiffres();
-      box.setAttribute("aria-label", dist ? "Carte des 360 communes corses colorées selon la distance à la station la plus proche, avec les stations actives en 2026."
-        : "Carte des stations actives en 2026 colorées selon leur enseigne : VITO, TotalEnergies, ENI, ou enseigne non renseignée.");
+      [0, 25, 50, 75, 100].forEach(v => {
+        svg.append("line").attr("class", "grid").attr("x1", x(v)).attr("x2", x(v)).attr("y1", m.t - 4).attr("y2", H - m.b).style("stroke", "var(--line)");
+        svg.append("text").attr("class", "label-muted").attr("x", x(v)).attr("y", 12).attr("text-anchor", v === 0 ? "start" : v === 100 ? "end" : "middle").text(v + nb + "%");
+      });
+      zones.forEach(([z, nom], i) => {
+        const { n, tot } = comptes(z), yb = m.t + i * lh + 10, h = 30;
+        svg.append("text").attr("class", z === "corse" ? "label-strong" : "label").attr("x", m.l - 10).attr("y", yb + h / 2 + 4).attr("text-anchor", "end").text(nom);
+        let cum = 0;
+        n.forEach((k, ci) => {
+          if (!k) return;
+          const x0 = x(cum / tot * 100), x1 = x((cum + k) / tot * 100); cum += k;
+          svg.append("rect").attr("x", x0).attr("y", yb).attr("width", Math.max(0, x1 - x0 - 2)).attr("height", h).attr("rx", 3).style("fill", CLASSES[ci].v)
+            .on("pointermove", e => showTip(e, `${nom} · ${CLASSES[ci].lib}`, [{ key: "Communes", val: `${k} sur ${tot}` }, { key: "Part", val: pct(k / tot * 100, 0) }]))
+            .on("pointerleave", hideTip);
+          if (x1 - x0 > 30) svg.append("text").attr("class", "label-strong").attr("x", (x0 + x1 - 2) / 2).attr("y", yb + h / 2 + 4).attr("text-anchor", "middle")
+            .style("fill", ci >= 2 ? "#fff" : "var(--ink)").style("pointer-events", "none").text(k);
+        });
+      });
     }
     construire();
-    segmente(document.getElementById("acces-mode"), v => { loc.mode = v; maj(); });
     surRedimension(box, construire);
     equiperCarte(carteEl, {
       titre: "Distance entre chaque commune corse et la station la plus proche",
-      source: "Sources : prix-carburants.gouv.fr (stations actives en 2026) · data.corsica (enseignes) · IGN ADMIN EXPRESS · distance à vol d'oiseau",
+      source: "Sources : prix-carburants.gouv.fr (stations actives en 2026) · IGN ADMIN EXPRESS · distance à vol d'oiseau",
       colonnes: [{ t: "Commune" }, { t: "Département" }, { t: "Station la plus proche (km)", n: 1 }, { t: "Stations à moins de 10 km", n: 1 }, { t: "Stations dans la commune", n: 1 }],
       lignes: () => [...T.communes].sort((a, b) => b.km - a.km).map(c => [c.n, NOMS_DEP[c.d], dec(c.km), String(c.n10), String(c.s)])
     });

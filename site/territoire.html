@@ -77,23 +77,17 @@
       <figure class="chart-card" id="carte-acces">
         <div class="chart-head">
           <h3>À quelle distance de la station la plus proche&nbsp;?</h3>
-          <p class="sub">Distance à vol d'oiseau entre le centre de chaque commune et la station la plus proche. Par la route, c'est souvent bien plus, surtout en montagne.</p>
-        </div>
-        <div class="controls">
-          <div class="seg" role="group" aria-label="Afficher sur la carte" id="acces-mode">
-            <button type="button" data-v="distance" aria-pressed="true">Distance</button>
-            <button type="button" data-v="enseignes" aria-pressed="false">Enseignes</button>
-          </div>
+          <p class="sub">Part des communes selon la distance à vol d'oiseau entre leur centre et la station la plus proche. Par la route, c'est souvent bien plus, surtout en montagne.</p>
         </div>
         <div class="legend" id="acces-legende" aria-hidden="true"></div>
         <div class="explorer">
-          <div class="chart" id="acces" role="img" aria-label="Carte des 360 communes corses colorées selon la distance à la station la plus proche, avec les stations actives en 2026."></div>
+          <div class="chart" id="acces" role="img" aria-label="Barres empilées : part des communes de Corse-du-Sud, de Haute-Corse et de la Corse selon la distance à la station la plus proche."></div>
           <div>
             <div class="day-stats" id="acces-stats" aria-live="polite"></div>
             <p class="ctl-label" style="margin-top:14px" id="acces-note"></p>
           </div>
         </div>
-        <figcaption class="chart-foot"><span>Sources : prix-carburants.gouv.fr (stations actives en 2026) · data.corsica (enseignes) · IGN ADMIN EXPRESS via france-geojson (communes) · Traitement : distance à vol d'oiseau depuis le centre de gravité de la commune</span></figcaption>
+        <figcaption class="chart-foot"><span>Sources : prix-carburants.gouv.fr (stations actives en 2026) · Traitement : distance à vol d'oiseau depuis le centre de gravité de la commune</span></figcaption>
       </figure>
     </div>
   </section>
@@ -350,7 +344,6 @@
 </footer>
 <script src="js/vendor/d3.v7.9.1.min.js"></script>
 <script src="data/data.js"></script>
-<script src="data/corse-geo.js"></script>
 <script src="js/common.js"></script>
 <script src="js/territoire.js"></script>
 </body>
