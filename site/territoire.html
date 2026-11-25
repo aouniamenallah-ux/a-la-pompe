@@ -89,6 +89,16 @@
         </div>
         <figcaption class="chart-foot"><span>Sources : prix-carburants.gouv.fr (stations actives en 2026) · Traitement : distance à vol d'oiseau depuis le centre de gravité de la commune</span></figcaption>
       </figure>
+
+      <figure class="chart-card" id="carte-ecdf">
+        <div class="chart-head">
+          <h3>Combien de communes sont à portée d'une station&nbsp;?</h3>
+          <p class="sub">Part cumulée des communes dont la station la plus proche est à moins de x&nbsp;km. Plus la courbe monte vite, mieux le territoire est couvert.</p>
+        </div>
+        <div class="legend" id="ecdf-legende" aria-hidden="true"></div>
+        <div class="chart" id="ecdf" role="img" aria-label="Courbes cumulatives : part des communes de Corse-du-Sud et de Haute-Corse à moins de x kilomètres d'une station."></div>
+        <figcaption class="chart-foot"><span>Sources : prix-carburants.gouv.fr (stations actives en 2026) · IGN · Traitement : distance à vol d'oiseau depuis le centre de gravité de la commune</span></figcaption>
+      </figure>
     </div>
   </section>
 
@@ -184,6 +194,21 @@
         </div>
         <div class="chart" id="classement" role="img" aria-label="Classement des départements selon le prix moyen du litre, avec la position de la Corse-du-Sud et de la Haute-Corse."></div>
         <figcaption class="chart-foot"><span>Source : prix-carburants.gouv.fr, fichiers annuels 2025 et 2026 · Traitement : département déduit du code postal, départements d'au moins 5 stations</span></figcaption>
+      </figure>
+
+      <figure class="chart-card" id="carte-bump">
+        <div class="chart-head">
+          <h3>Le rang de la Corse parmi les 96 départements, de période en période</h3>
+          <p class="sub">Chaque trait gris est un département, classé du plus cher (1er) au moins cher (96e). Les deux départements corses sont en couleur&nbsp;; survolez un trait pour l'identifier.</p>
+        </div>
+        <div class="controls">
+          <div class="seg" role="group" aria-label="Carburant" id="bp-carb">
+            <button type="button" data-v="g" aria-pressed="true"><i class="key key-sq bg-g"></i>Gazole</button>
+            <button type="button" data-v="s" aria-pressed="false"><i class="key key-ci bg-s"></i>SP95</button>
+          </div>
+        </div>
+        <div class="chart" id="bump" role="img" aria-label="Graphique de pentes : rang de chaque département selon le prix moyen avant la crise, pendant la crise et au dernier jour, avec la Corse-du-Sud et la Haute-Corse en évidence."></div>
+        <figcaption class="chart-foot"><span>Source : prix-carburants.gouv.fr, fichiers annuels 2025 et 2026 · Traitement : départements d'au moins 5 stations (le nombre de départements classés peut varier d'une période à l'autre)</span></figcaption>
       </figure>
     </div>
   </section>

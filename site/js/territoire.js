@@ -177,6 +177,100 @@
     });
   }
 
+  /* ---------- 2 bis. courbes cumulatives de la distance ---------- */
+  function ecdf() {
+    const box = document.getElementById("ecdf"), leg = document.getElementById("ecdf-legende");
+    const series = [["2A", "Corse-du-Sud", "var(--ink)", ""], ["2B", "Haute-Corse", "var(--moins)", "7 4"]];
+    leg.innerHTML = series.map(([, n, c, d]) => `<span><i class="key key-line" style="background:none;border-top:3px ${d ? "dashed" : "solid"} ${c};height:0"></i>${n}</span>`).join("");
+    const part = (z, km) => { const l = T.communes.filter(c => c.d === z); return l.filter(c => c.km <= km).length / l.length * 100; };
+    function construire() {
+      box.replaceChildren();
+      const W = box.clientWidth, H = W < 520 ? 300 : 340, m = { t: 20, r: 18, b: 40, l: 44 };
+      const xmax = Math.ceil(acc.corse.km_max), x = d3.scaleLinear().domain([0, xmax]).range([m.l, W - m.r]), y = d3.scaleLinear().domain([0, 100]).range([H - m.b, m.t]);
+      const svg = d3.select(box).append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("width", W).attr("height", H);
+      svg.append("g").attr("class", "grid").selectAll("line").data(y.ticks(5)).join("line").attr("x1", m.l).attr("x2", W - m.r).attr("y1", d => y(d)).attr("y2", d => y(d)).style("stroke", "var(--line)");
+      svg.append("g").attr("class", "axis").attr("transform", `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(W < 520 ? 4 : 8).tickFormat(v => v + nb + "km").tickSizeOuter(0));
+      svg.append("g").attr("class", "axis").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(v => v + nb + "%").tickSize(0)).select(".domain").remove();
+      const s10 = x(T.seuil);
+      svg.append("rect").attr("x", s10).attr("y", m.t).attr("width", W - m.r - s10).attr("height", H - m.b - m.t).style("fill", "var(--surface-2)").style("opacity", 0.7);
+      if (W >= 520) svg.append("text").attr("class", "label-muted").attr("x", s10 + 6).attr("y", m.t + 14).text("au-delà de " + T.seuil + nb + "km");
+      const pas = d3.range(0, xmax + 0.01, 0.1);
+      series.forEach(([z, nom, c, d]) => {
+        const pts = pas.map(k => [x(k), y(part(z, k))]);
+        svg.append("path").attr("d", d3.line().curve(d3.curveStepAfter)(pts)).style("fill", "none").style("stroke", c).style("stroke-width", 2.4).style("stroke-dasharray", d);
+        const v = part(z, T.seuil);
+        svg.append("circle").attr("cx", s10).attr("cy", y(v)).attr("r", 4.5).style("fill", c).style("stroke", "var(--surface)").style("stroke-width", 2);
+        const etroit = W < 520, yl = etroit ? y(z === "2A" ? 30 : 18) : y(92) + (z === "2A" ? 52 : 80), xl = etroit ? x(6) : s10 + 14;
+        if (!etroit) svg.append("line").attr("class", "annot-line").attr("x1", s10).attr("x2", xl - 6).attr("y1", y(v)).attr("y2", yl - 4);
+        svg.append("circle").attr("cx", xl).attr("cy", yl - 4).attr("r", 4.5).style("fill", c);
+        svg.append("text").attr("class", "label-strong").attr("x", xl + 10).attr("y", yl).text(etroit ? `${z} : ${dec(v, 0)}${nb}% à < ${T.seuil}${nb}km` : `${nom} : ${dec(v, 0)}${nb}% à moins de ${T.seuil}${nb}km`);
+      });
+      const hot = svg.append("line").style("stroke", "var(--ink)").style("stroke-width", 1).style("display", "none").attr("y1", m.t).attr("y2", H - m.b);
+      svg.append("rect").attr("class", "hit").attr("x", m.l).attr("y", m.t).attr("width", W - m.l - m.r).attr("height", H - m.t - m.b)
+        .on("pointermove", e => {
+          const k = Math.round(x.invert(d3.pointer(e)[0]) * 2) / 2; hot.style("display", null).attr("x1", x(k)).attr("x2", x(k));
+          showTip(e, `À moins de ${dec(k, 1)}${nb}km`, series.map(([z, nom]) => ({ key: nom, val: pct(part(z, k), 0) })));
+        }).on("pointerleave", () => { hot.style("display", "none"); hideTip(); });
+    }
+    construire();
+    surRedimension(box, construire);
+    equiperCarte(document.getElementById("carte-ecdf"), {
+      titre: "Part cumulée des communes selon la distance à la station la plus proche",
+      source: "Sources : prix-carburants.gouv.fr (stations actives en 2026) · distance à vol d'oiseau",
+      colonnes: [{ t: "Distance (km)", n: 1 }, { t: "Corse-du-Sud (%)", n: 1 }, { t: "Haute-Corse (%)", n: 1 }],
+      lignes: () => d3.range(0, 16, 1).map(k => [String(k), dec(part("2A", k), 0), dec(part("2B", k), 0)])
+    });
+  }
+
+  /* ---------- 2 ter. graphique de pentes : rang des départements ---------- */
+  function bump() {
+    const box = document.getElementById("bump"), loc = { k: "g" };
+    const PER = [["avant_crise", "Avant la crise"], ["crise", "Pendant la crise"], ["dernier_jour", "Dernier jour"]];
+    function construire() {
+      box.replaceChildren();
+      const rangs = new Map();
+      PER.forEach(([p], pi) => { const L = [...T.classement[loc.k][p].liste].sort((a, b) => b.moy - a.moy); L.forEach((d, i) => { if (!rangs.has(d.dep)) rangs.set(d.dep, { dep: d.dep, nom: d.nom, r: [] }); rangs.get(d.dep).r[pi] = i + 1; }); });
+      const D = [...rangs.values()].filter(d => d.r.filter(Boolean).length === 3);
+      const nMax = d3.max(PER, ([p]) => T.classement[loc.k][p].liste.length);
+      const W = box.clientWidth, H = W < 520 ? 520 : 620, m = { t: 40, r: W < 520 ? 70 : 150, b: 12, l: W < 520 ? 70 : 150 };
+      const x = d3.scalePoint().domain([0, 1, 2]).range([m.l, W - m.r]), y = d3.scaleLinear().domain([1, nMax]).range([m.t, H - m.b]);
+      const svg = d3.select(box).append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("width", W).attr("height", H);
+      PER.forEach(([, lib], i) => {
+        svg.append("line").attr("x1", x(i)).attr("x2", x(i)).attr("y1", m.t - 8).attr("y2", H - m.b).style("stroke", "var(--line)");
+        svg.append("text").attr("class", "label-strong").attr("x", x(i)).attr("y", 14).attr("text-anchor", W < 520 ? "middle" : i === 0 ? "start" : i === 2 ? "end" : "middle").text(W < 520 ? ["Avant", "Crise", "Fin"][i] : lib);
+      });
+      const ligne = d => d3.line()(d.r.map((r, i) => [x(i), y(r)]));
+      const corse = z => z === "2A" || z === "2B";
+      svg.append("g").selectAll("path").data(D.filter(d => !corse(d.dep))).join("path").attr("class", "bump-l").attr("d", ligne)
+        .style("fill", "none").style("stroke", "var(--axis)").style("stroke-width", 1).style("opacity", 0.45)
+        .on("pointerenter", function () { d3.select(this).style("stroke", "var(--ink)").style("stroke-width", 2.4).style("opacity", 1).raise(); })
+        .on("pointermove", (e, d) => showTip(e, d.nom + " (" + d.dep + ")", PER.map(([, lib], i) => ({ key: lib, val: rangTxt(d.r[i]) + " plus cher" }))))
+        .on("pointerleave", function () { d3.select(this).style("stroke", "var(--axis)").style("stroke-width", 1).style("opacity", 0.45); hideTip(); });
+      [["2A", "var(--ink)", ""], ["2B", "var(--moins)", "7 4"]].forEach(([z, c, d]) => {
+        const e = D.find(q => q.dep === z); if (!e) return;
+        svg.append("path").attr("d", ligne(e)).style("fill", "none").style("stroke", c).style("stroke-width", 3.2).style("stroke-dasharray", d)
+          .on("pointermove", ev => showTip(ev, e.nom, PER.map(([, lib], i) => ({ key: lib, val: rangTxt(e.r[i]) + " sur " + nMax })))).on("pointerleave", hideTip);
+        e.r.forEach((r, i) => {
+          svg.append("circle").attr("cx", x(i)).attr("cy", y(r)).attr("r", 5).style("fill", c).style("stroke", "var(--surface)").style("stroke-width", 2);
+          const gauche = i === 0, milieu = i === 1, dy = z === "2A" ? -9 : 19, dyc = z === "2A" ? -3 : 11;
+          svg.append("text").attr("class", "label-strong halo").attr("x", x(i) + (gauche ? -10 : milieu ? 0 : 10)).attr("y", y(r) + (milieu ? dy : dyc))
+            .attr("text-anchor", gauche ? "end" : milieu ? "middle" : "start").text(gauche || i === 2 ? `${W < 520 ? z : e.nom} · ${rangTxt(r)}` : rangTxt(r));
+        });
+      });
+      svg.append("text").attr("class", "label-muted").attr("x", 0).attr("y", W < 520 ? 30 : 14).text("↑ plus cher");
+      svg.append("text").attr("class", "label-muted").attr("x", 0).attr("y", H - m.b).text("↓ moins cher");
+    }
+    construire();
+    segmente(document.getElementById("bp-carb"), v => { loc.k = v; construire(); });
+    surRedimension(box, construire);
+    equiperCarte(document.getElementById("carte-bump"), {
+      titre: "Rang (du plus cher) des départements selon le prix moyen du litre, par période",
+      source: "Source : prix-carburants.gouv.fr, fichiers annuels 2025 et 2026",
+      colonnes: [{ t: "Département" }, { t: "Avant la crise", n: 1 }, { t: "Pendant la crise", n: 1 }, { t: "Dernier jour", n: 1 }],
+      lignes: () => { const o = new Map(); PER.forEach(([p], pi) => [...T.classement[loc.k][p].liste].sort((a, b) => b.moy - a.moy).forEach((d, i) => { if (!o.has(d.dep)) o.set(d.dep, [`${d.nom} (${d.dep})`, "", "", ""]); o.get(d.dep)[pi + 1] = String(i + 1); })); return [...o.values()]; }
+    });
+  }
+
   /* ---------- 3. enseignes par département ---------- */
   function enseignesDep() {
     const box = document.getElementById("ens-dep"), carteEl = document.getElementById("carte-ens-dep");
@@ -614,6 +708,6 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     remplirTextes();
-    densite(); acces(); enseignesDep(); enseignesEpci(); voiture(); continent(); classement(); simulateur(); km50(); duel(); sources();
+    densite(); acces(); ecdf(); enseignesDep(); enseignesEpci(); voiture(); continent(); classement(); bump(); simulateur(); km50(); duel(); sources();
   });
 })();
