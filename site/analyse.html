@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Analyse statistique — À la pompe</title>
+  <meta name="description" content="Méthode de traitement des données et statistiques descriptives des prix des carburants en Corse : quartiles, écart-type, corrélation, droites de régression.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="À la pompe, accueil">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="4" width="14" height="23" rx="2.5" fill="#f2b705"/><rect x="8" y="7.5" width="8" height="6" rx="1" fill="#1b1f23"/><rect x="3" y="26" width="18" height="3" rx="1" fill="#f2b705"/><path d="M19 10.5h3a2 2 0 0 1 2 2v9a1.75 1.75 0 0 0 3.5 0v-9.5l-3-3.5" fill="none" stroke="#f2b705" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>À la <em>pompe</em></span>
+    </a>
+    <button class="icon-btn burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Ouvrir le menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <nav class="nav" id="nav" aria-label="Navigation principale">
+      <a href="index.html">L'essentiel</a>
+      <a href="stations.html">Stations &amp; carte</a>
+      <a href="analyse.html" aria-current="page">Analyse statistique</a>
+      <a href="communication.html">Communication</a>
+      <button class="icon-btn theme-toggle" type="button" aria-label="Changer de thème"></button>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu">
+  <section class="band hero" aria-labelledby="titre" style="padding-bottom:64px">
+    <div class="wrap" style="grid-template-columns:1fr">
+      <div>
+        <p class="eyebrow">Méthode · 2 sources · <span data-ap="maj">8 621</span> mises à jour</p>
+        <h1 id="titre">Des données brutes aux indicateurs</h1>
+        <p class="lede">Comment les fichiers de data.corsica et de prix-carburants.gouv.fr ont été assemblés et nettoyés, puis résumés avec les outils de la statistique descriptive&nbsp;: moyenne, médiane, quartiles, écart-type, corrélation et droites d'ajustement.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="s1" style="padding-top:40px">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">1 · Traitement</p>
+        <h2 id="s1">Sept étapes de traitement</h2>
+        <p class="lede text">Le jeu de données «&nbsp;Prix des carburants – J-1 – avec historique en Corse&nbsp;» (Collectivité de Corse, Licence Ouverte 2.0) enregistre chaque mise à jour de prix déclarée par une station. Il n'est plus alimenté depuis le 3 juin 2026&nbsp;: on le prolonge avec le fichier national dont il est issu. Le script <code>traitement.py</code> (Python, pandas) assemble les deux sources en un tableau «&nbsp;une station × un jour&nbsp;».</p>
+      </div>
+      <ol class="steps" id="etapes"></ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="s2">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">2 · Statistiques descriptives</p>
+        <h2 id="s2">Deux périodes, deux visages</h2>
+        <p class="lede text">Indicateurs calculés sur tous les prix affichés, station par station et jour par jour. Pendant la crise, l'écart-type du gazole est multiplié par <span data-ap="ratio-et">2,4</span>. Pour le SP95, de mars à novembre 2026, la médiane reste bloquée à 1,99&nbsp;€, le plafond de TotalEnergies&nbsp;; la moitié centrale des prix s'étale à partir de septembre, quand les autres enseignes augmentent leurs prix.</p>
+      </div>
+      <div class="chart-card">
+        <div class="table-scroll" style="max-height:none">
+          <table id="table-desc">
+            <caption class="sr-only">Statistiques descriptives des prix par carburant et par période</caption>
+            <thead><tr><th scope="col">Indicateur</th><th scope="col" class="n">Gazole, avant la crise</th><th scope="col" class="n">Gazole, crise</th><th scope="col" class="n">SP95, avant la crise</th><th scope="col" class="n">SP95, crise</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p class="ctl-label" style="margin-top:10px">Avant la crise : 1<sup>er</sup> avril 2025 – 27 février 2026 (333 jours). Crise : 28 février – <span data-ap="date-fin">24 novembre 2026</span> (<span data-ap="p2-jours">270</span> jours). Écart-type et variance de population (fonctions ECARTYPE.PEARSON et VAR.P d'Excel)&nbsp;; quartiles par interpolation linéaire (QUARTILE.INCLUS).</p>
+      </div>
+
+      <figure class="chart-card" id="carte-boites">
+        <div class="chart-head">
+          <h3>Répartition mensuelle des prix affichés</h3>
+          <p class="sub">Chaque boîte couvre la moitié centrale des prix du mois (du 1<sup>er</sup> au 3<sup>e</sup> quartile)&nbsp;; le trait épais marque la médiane, les moustaches s'arrêtent aux valeurs situées à moins de 1,5 fois l'écart interquartile.</p>
+        </div>
+        <div class="controls">
+          <div class="seg" role="group" aria-label="Carburant" id="bx-carb">
+            <button type="button" data-v="g" aria-pressed="true"><i class="key key-sq bg-g"></i>Gazole</button>
+            <button type="button" data-v="s" aria-pressed="false"><i class="key key-ci bg-s"></i>SP95</button>
+          </div>
+        </div>
+        <div class="chart" id="boites" role="img" aria-label="Boîtes à moustaches mensuelles des prix : boîtes étroites et stables d'avril 2025 à février 2026, puis plus hautes et plus étalées à partir de mars 2026. Pour le SP95, les boîtes restent collées à 1,99 euro de juin à août, puis s'élargissent de septembre à novembre."></div>
+        <figcaption class="chart-foot"><span>Sources : data.corsica puis prix-carburants.gouv.fr · Traitement : prix station×jour, regroupés par mois<span data-ap="note-mois-partiel"> (* novembre 2026 (1er–24 nov.))</span></span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="s3">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">3 · Série statistique double</p>
+        <h2 id="s3">Une station chère pour le gazole l'est aussi pour le SP95</h2>
+        <p class="lede text">Chaque point est une station&nbsp;: en abscisse son prix moyen du gazole (x), en ordonnée son prix moyen du SP95 (y). On retrouve la démarche du TP de statistiques descriptives&nbsp;: point moyen G, droite de Mayer et droites des moindres carrés, puis coefficient de corrélation pour juger si un ajustement affine est justifié.</p>
+      </div>
+      <figure class="chart-card" id="carte-nuage">
+        <div class="chart-head">
+          <h3>Prix moyen du SP95 en fonction du prix moyen du gazole, par station</h3>
+          <p class="sub">Stations dont le prix est connu au moins 80&nbsp;% des jours de la période pour les deux carburants.</p>
+        </div>
+        <div class="controls">
+          <div class="seg" role="group" aria-label="Période" id="nu-per">
+            <button type="button" data-v="P1" aria-pressed="true">Avant la crise</button>
+            <button type="button" data-v="P2" aria-pressed="false">Crise de 2026</button>
+          </div>
+          <label class="check"><input type="checkbox" id="nu-yx" checked> Moindres carrés de y en x</label>
+          <label class="check"><input type="checkbox" id="nu-xy"> Moindres carrés de x en y</label>
+          <label class="check"><input type="checkbox" id="nu-mayer"> Droite de Mayer</label>
+        </div>
+        <div class="chart" id="nuage" role="img" aria-label="Nuage de points des stations : le prix moyen du SP95 augmente presque proportionnellement au prix moyen du gazole, avec un coefficient de corrélation de 0,99 avant la crise."></div>
+        <div class="reg-panel" id="reg-panel" aria-live="polite"></div>
+        <figcaption class="chart-foot"><span>Sources : data.corsica puis prix-carburants.gouv.fr · Traitement : moyennes par station, calculs identiques dans le classeur Excel téléchargeable</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="s4">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">4 · Comportement des stations</p>
+        <h2 id="s4">Les jours où tout le monde change ses prix</h2>
+        <p class="lede text">Nombre de stations qui modifient leur prix du gazole chaque jour. Les changements arrivent souvent en vagues&nbsp;: le <span data-ap="record-chg-date">4 mars 2026</span>, <span data-ap="record-chg-n">55</span> stations ont changé leur prix le même jour.</p>
+      </div>
+      <figure class="chart-card" id="carte-calendrier">
+        <div class="chart-head">
+          <h3>Calendrier des changements de prix</h3>
+          <p class="sub">Une case par jour, une colonne par semaine. Plus la case est foncée, plus le nombre de stations qui changent de prix ce jour-là est élevé.</p>
+        </div>
+        <div class="controls">
+          <div class="seg" role="group" aria-label="Carburant" id="ca-carb">
+            <button type="button" data-v="g" aria-pressed="true"><i class="key key-sq bg-g"></i>Gazole</button>
+            <button type="button" data-v="s" aria-pressed="false"><i class="key key-ci bg-s"></i>SP95</button>
+          </div>
+          <div class="scale-legend" aria-hidden="true" id="ca-legende"></div>
+        </div>
+        <div class="chart" id="calendrier" role="img" aria-label="Calendrier des changements de prix : quelques jours concentrent beaucoup de changements, en particulier début mars 2026."></div>
+        <figcaption class="chart-foot"><span>Sources : data.corsica puis prix-carburants.gouv.fr · Traitement : comparaison du dernier prix de chaque journée avec le précédent, station par station</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="telechargements">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">5 · Ouverture des données</p>
+        <h2 id="telechargements">Télécharger les données et les calculs</h2>
+      </div>
+      <div class="dl-list">
+        <a class="dl" href="data/brut/prix-des-carburants-j-1-avec-historique-en-corse.csv" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5"/></svg><span>Fichier brut (CSV)<small>data.corsica · 6 760 lignes · 5,9 Mo</small></span></a>
+        <a class="dl" href="data/brut/national-2026-corse-prix.csv" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5"/></svg><span>Extrait du fichier national (CSV)<small>prix-carburants.gouv.fr · stations corses, 2026</small></span></a>
+        <a class="dl" href="data/propre/releves_nettoyes.csv" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 14l2 2 4-4"/></svg><span>Relevés nettoyés (CSV)<small><span data-ap="maj">8 621</span> mises à jour, deux sources</small></span></a>
+        <a class="dl" href="data/propre/stations.csv" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg><span>Table des stations (CSV)<small>108 stations, moyennes par période</small></span></a>
+        <a class="dl" href="data/propre/prix_journaliers_statistiques.csv" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M8 17l3-3 2 2 3-4"/></svg><span>Statistiques journalières (CSV)<small><span data-ap="jours">603</span> jours × 2 carburants</small></span></a>
+        <a class="dl" href="data/analyse_statistique_carburants.xlsx" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M4 9h16M4 15h16M10 3v18"/></svg><span>Classeur Excel de l'analyse<small>formules, régressions, graphiques</small></span></a>
+        <a class="dl" href="data/traitement.py" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg><span>Script de traitement (Python)<small>pandas, numpy</small></span></a>
+        <a class="dl" href="data/extraction_national.py" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg><span>Script d'extraction (Python)<small>fichier national, stations corses</small></span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <h4>À la pompe</h4>
+      <p>Les prix des carburants en Corse, station par station, depuis avril 2025. Projet réalisé pour la SAÉ 303 «&nbsp;Concevoir des visualisations de données pour le web et un support animé&nbsp;».</p>
+    </div>
+    <div>
+      <h4>Données</h4>
+      <ul>
+        <li><a href="https://data.corsica/datasets/prix-des-carburants-j-1-avec-historique-en-corse">data.corsica · Prix des carburants J-1</a></li>
+        <li><a href="https://www.prix-carburants.gouv.fr/rubrique/opendata/">prix-carburants.gouv.fr · fichier annuel 2026</a></li>
+        <li>Licence Ouverte 2.0 (Etalab)</li>
+        <li><a href="analyse.html#telechargements">Télécharger les données</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Réalisation</h4>
+      <ul>
+        <li>Amen Allah Aouni · BUT MMI 2</li>
+        <li>IUT de Corse, Università di Corsica</li>
+        <li>D3.js 7.9.1 · polices Barlow et DSEG7 (OFL)</li>
+      </ul>
+    </div>
+    <p class="legal">Les prix proviennent du flux public prix-carburants.gouv.fr, relayé par data.corsica jusqu'au 2 juin 2026&nbsp;; ils peuvent différer du prix payé à la pompe. Données au <span data-ap="date-fin">24 novembre 2026</span>. © <span data-annee>2026</span> Amen Allah Aouni.</p>
+  </div>
+</footer>
+
+<script src="js/vendor/d3.v7.9.1.min.js"></script>
+<script src="data/data.js"></script>
+<script src="js/common.js"></script>
+<script src="js/analyse.js"></script>
+</body>
+</html>

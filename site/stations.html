@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stations et carte — À la pompe</title>
+  <meta name="description" content="Carte animée des prix du gazole et du SP95 dans les 108 stations corses, jour par jour, depuis avril 2025.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="À la pompe, accueil">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="4" width="14" height="23" rx="2.5" fill="#f2b705"/><rect x="8" y="7.5" width="8" height="6" rx="1" fill="#1b1f23"/><rect x="3" y="26" width="18" height="3" rx="1" fill="#f2b705"/><path d="M19 10.5h3a2 2 0 0 1 2 2v9a1.75 1.75 0 0 0 3.5 0v-9.5l-3-3.5" fill="none" stroke="#f2b705" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>À la <em>pompe</em></span>
+    </a>
+    <button class="icon-btn burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Ouvrir le menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <nav class="nav" id="nav" aria-label="Navigation principale">
+      <a href="index.html">L'essentiel</a>
+      <a href="stations.html" aria-current="page">Stations &amp; carte</a>
+      <a href="analyse.html">Analyse statistique</a>
+      <a href="communication.html">Communication</a>
+      <button class="icon-btn theme-toggle" type="button" aria-label="Changer de thème"></button>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu">
+  <section class="band hero" aria-labelledby="titre" style="padding-bottom:64px">
+    <div class="wrap" style="grid-template-columns:1fr">
+      <div>
+        <p class="eyebrow"><span data-ap="stations">108</span> stations · <span data-ap="jours">603</span> jours</p>
+        <h1 id="titre">D'une station à l'autre, le plein ne coûte pas le même prix</h1>
+        <p class="lede">Lancez l'animation pour voir les prix évoluer jour par jour, du 1<sup>er</sup> avril 2025 au <span data-ap="date-fin">24 novembre 2026</span>. Chaque point est une station&nbsp;: <span style="color:#7fb0f0">bleu</span> quand elle est moins chère que la moitié des stations de l'île ce jour-là, <span style="color:#f08a80">rouge</span> quand elle est plus chère.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="s1" style="padding-top:28px">
+    <div class="wrap">
+      <figure class="chart-card" id="carte-explorer">
+        <div class="chart-head">
+          <h3 id="s1">Les prix de chaque station, jour par jour</h3>
+          <p class="sub">Couleur&nbsp;: écart entre le prix de la station et le prix médian de l'île le jour choisi. Un prix reste valable jusqu'à sa mise à jour suivante (120 jours au plus).</p>
+        </div>
+        <div class="controls">
+          <div class="seg" role="group" aria-label="Carburant" id="exp-carb">
+            <button type="button" data-v="g" aria-pressed="true"><i class="key key-sq bg-g"></i>Gazole</button>
+            <button type="button" data-v="s" aria-pressed="false"><i class="key key-ci bg-s"></i>SP95</button>
+          </div>
+          <div class="scale-legend" aria-hidden="true"><span>Moins cher</span><span class="ramp" id="ramp"></span><span>Plus cher que la médiane</span></div>
+        </div>
+        <div class="player">
+          <button class="play" type="button" id="play" aria-label="Lancer l'animation"></button>
+          <input type="range" id="jour" min="0" max="602" value="602" aria-label="Jour affiché">
+          <output id="jour-out" for="jour">24 novembre 2026</output>
+        </div>
+        <div class="explorer">
+          <div class="chart" id="carte" role="img" aria-label="Carte de la Corse avec les 108 stations-service colorées selon leur prix le jour choisi."></div>
+          <div>
+            <div class="chart" id="essaim" role="img" aria-label="Répartition des prix des stations le jour choisi : chaque point est une station, la boîte grise couvre la moitié centrale des prix."></div>
+            <div class="day-stats" id="day-stats" aria-live="polite"></div>
+          </div>
+        </div>
+        <figcaption class="chart-foot"><span>Sources : data.corsica (jusqu'au 2 juin 2026), puis prix-carburants.gouv.fr · Fond de carte : IGN ADMIN EXPRESS via france-geojson</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="s2">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Les enseignes</p>
+        <h2 id="s2">Pendant la crise, les stations TotalEnergies sont restées moins chères</h2>
+        <p class="lede text">Jusqu'en février 2026, les trois grandes enseignes de l'île affichent des prix presque identiques. À partir du 13 mars, TotalEnergies plafonne ses prix&nbsp;: l'essence à 1,99&nbsp;€, le gazole à 2,09&nbsp;€ puis à 2,25&nbsp;€ à partir du 8 avril, avec un gazole à 2,09&nbsp;€ pendant les ponts de mai. Début juillet, le plafond est réservé aux stations rurales, puis il revient partout le 22 juillet. Fin septembre, le litre de gazole dépasse 2,33&nbsp;€ en moyenne chez VITO et 2,43&nbsp;€ chez ENI, contre 2,24&nbsp;€ chez TotalEnergies. Fin novembre 2026, les trois enseignes se retrouvaient autour de 2,22&nbsp;€.</p>
+      </div>
+      <figure class="chart-card" id="carte-marques">
+        <div class="chart-head">
+          <h3>Prix moyen par enseigne</h3>
+          <p class="sub">Moyenne journalière des stations de chaque enseigne&nbsp;: VITO (54 stations), TotalEnergies (40), ENI (12). Les 2 stations indépendantes ne sont pas tracées, faute d'effectif suffisant.</p>
+        </div>
+        <div class="controls">
+          <div class="seg" role="group" aria-label="Carburant" id="mq-carb">
+            <button type="button" data-v="g" aria-pressed="true"><i class="key key-sq bg-g"></i>Gazole</button>
+            <button type="button" data-v="s" aria-pressed="false"><i class="key key-ci bg-s"></i>SP95</button>
+          </div>
+          <div class="seg" role="group" aria-label="Période" id="mq-per">
+            <button type="button" data-v="p2" aria-pressed="true">Crise de 2026</button>
+            <button type="button" data-v="tout" aria-pressed="false">Toute la période</button>
+          </div>
+        </div>
+        <div class="legend" aria-hidden="true">
+          <span><i class="key key-line" style="background:var(--cat-1)"></i>VITO</span>
+          <span><i class="key key-line" style="background:var(--cat-2)"></i>TotalEnergies</span>
+          <span><i class="key key-line" style="background:var(--cat-3)"></i>ENI</span>
+          <span><i class="key key-line" style="background:none;border-top:2px dashed var(--ink-2);height:0"></i>Plafond annoncé par TotalEnergies</span>
+        </div>
+        <div class="chart" id="marques" role="img" aria-label="Courbes du prix moyen par enseigne. Pendant la crise de 2026, la courbe TotalEnergies reste sous celles de VITO et d'ENI et suit le plafond annoncé par l'enseigne ; pour le gazole, les trois courbes se rejoignent en novembre."></div>
+        <figcaption class="chart-foot"><span>Sources : data.corsica puis prix-carburants.gouv.fr (prix) · communiqués TotalEnergies de mars à octobre 2026 (plafonds)</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="s3">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Les territoires</p>
+        <h2 id="s3">Où le plein coûte-t-il plus cher&nbsp;?</h2>
+        <p class="lede text">Écart entre le prix moyen des stations de chaque intercommunalité et la moyenne de l'île. Les écarts restent de quelques centimes, mais ils se creusent pendant la crise.</p>
+      </div>
+      <figure class="chart-card" id="carte-epci">
+        <div class="chart-head">
+          <h3>Écart à la moyenne de la Corse, par intercommunalité</h3>
+          <p class="sub">En centimes par litre. Seules les intercommunalités comptant au moins deux stations sont affichées&nbsp;; le nombre de stations est indiqué entre parenthèses.</p>
+        </div>
+        <div class="controls">
+          <div class="seg" role="group" aria-label="Carburant" id="ep-carb">
+            <button type="button" data-v="g" aria-pressed="true"><i class="key key-sq bg-g"></i>Gazole</button>
+            <button type="button" data-v="s" aria-pressed="false"><i class="key key-ci bg-s"></i>SP95</button>
+          </div>
+          <div class="seg" role="group" aria-label="Période" id="ep-per">
+            <button type="button" data-v="P2" aria-pressed="true"><span>Crise (28 févr. – <span data-ap="date-fin-court">24 nov. 2026</span>)</span></button>
+            <button type="button" data-v="P1" aria-pressed="false">Avant (avr. 2025 – févr. 2026)</button>
+          </div>
+        </div>
+        <div class="chart" id="epci" role="img" aria-label="Diagramme des écarts de prix par intercommunalité par rapport à la moyenne corse."></div>
+        <figcaption class="chart-foot"><span>Sources : data.corsica puis prix-carburants.gouv.fr · Traitement : moyenne des prix journaliers des stations de chaque intercommunalité</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="s4">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Calculateur</p>
+        <h2 id="s4">Combien coûte votre plein&nbsp;?</h2>
+        <p class="lede text">Le calcul utilise le carburant et le jour choisis dans la carte ci-dessus.</p>
+      </div>
+      <div class="chart-card calc" id="calc">
+        <div>
+          <div class="field">
+            <label for="litres">Volume du plein&nbsp;: <span id="litres-out" class="num">50 litres</span></label>
+            <input type="range" id="litres" min="20" max="80" step="5" value="50">
+          </div>
+          <div class="field">
+            <p class="ctl-label" id="calc-contexte">Gazole · 24 novembre 2026</p>
+          </div>
+        </div>
+        <div class="calc-out" id="calc-out" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="s5">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Annuaire</p>
+        <h2 id="s5">Toutes les stations</h2>
+        <p class="lede text">Prix affichés le jour choisi dans la carte. Cliquez sur un en-tête de colonne pour trier.</p>
+      </div>
+      <div class="chart-card">
+        <label class="sr-only" for="recherche">Rechercher une station</label>
+        <input class="search" type="search" id="recherche" placeholder="Rechercher une station, une commune, une enseigne…">
+        <div class="table-scroll" style="max-height:560px">
+          <table id="table-stations">
+            <caption class="sr-only">Prix des stations-service corses le jour choisi</caption>
+            <thead><tr>
+              <th scope="col" data-col="nom"><button type="button">Station</button></th>
+              <th scope="col" data-col="commune"><button type="button">Commune</button></th>
+              <th scope="col" data-col="marque"><button type="button">Enseigne</button></th>
+              <th scope="col" class="n" data-col="g" aria-sort="ascending"><button type="button">Gazole</button></th>
+              <th scope="col" class="n" data-col="s"><button type="button">SP95</button></th>
+              <th scope="col" class="n" data-col="chg"><button type="button">Changements de prix</button></th>
+            </tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p class="ctl-label" style="margin-top:10px" id="table-note"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <h4>À la pompe</h4>
+      <p>Les prix des carburants en Corse, station par station, depuis avril 2025. Projet réalisé pour la SAÉ 303 «&nbsp;Concevoir des visualisations de données pour le web et un support animé&nbsp;».</p>
+    </div>
+    <div>
+      <h4>Données</h4>
+      <ul>
+        <li><a href="https://data.corsica/datasets/prix-des-carburants-j-1-avec-historique-en-corse">data.corsica · Prix des carburants J-1</a></li>
+        <li><a href="https://www.prix-carburants.gouv.fr/rubrique/opendata/">prix-carburants.gouv.fr · fichier annuel 2026</a></li>
+        <li>Licence Ouverte 2.0 (Etalab)</li>
+        <li><a href="analyse.html#telechargements">Télécharger les données</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Réalisation</h4>
+      <ul>
+        <li>Amen Allah Aouni · BUT MMI 2</li>
+        <li>IUT de Corse, Università di Corsica</li>
+        <li>D3.js 7.9.1 · polices Barlow et DSEG7 (OFL)</li>
+      </ul>
+    </div>
+    <p class="legal">Les prix proviennent du flux public prix-carburants.gouv.fr, relayé par data.corsica jusqu'au 2 juin 2026&nbsp;; ils peuvent différer du prix payé à la pompe. Données au <span data-ap="date-fin">24 novembre 2026</span>. © <span data-annee>2026</span> Amen Allah Aouni.</p>
+  </div>
+</footer>
+
+<script src="js/vendor/d3.v7.9.1.min.js"></script>
+<script src="data/data.js"></script>
+<script src="data/corse-geo.js"></script>
+<script src="js/common.js"></script>
+<script src="js/stations.js"></script>
+</body>
+</html>

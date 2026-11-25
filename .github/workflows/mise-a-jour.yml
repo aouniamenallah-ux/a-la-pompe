@@ -1,0 +1,74 @@
+# Mise à jour quotidienne du site « À la pompe »
+# Chaque matin : téléchargement du fichier officiel des prix (prix-carburants.gouv.fr),
+# extraction des stations corses, recalcul des indicateurs et du classeur Excel,
+# puis publication du dossier site/ sur GitHub Pages.
+name: Mise à jour quotidienne
+
+on:
+  schedule:
+    - cron: "23 5 * * *"   # tous les jours à 5 h 23 UTC (6 h 23 à Paris en hiver), une fois le fichier de la veille publié
+  workflow_dispatch:        # lancement à la main depuis l'onglet Actions
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  construire:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Installer les dépendances
+        run: pip install -r requirements.txt
+
+      - name: Télécharger le fichier annuel officiel
+        run: |
+          mkdir -p /tmp/national
+          for an in $(seq 2026 "$(date +%Y)"); do
+            if ! curl -fsSL --retry 5 --retry-delay 30 -A "Mozilla/5.0 (projet etudiant SAE 303)" \
+                 -o "/tmp/national/PrixCarburants_annuel_$an.zip" "https://donnees.roulez-eco.fr/opendata/annee/$an"; then
+              echo "Fichier $an indisponible pour le moment"
+              rm -f "/tmp/national/PrixCarburants_annuel_$an.zip"
+            fi
+          done
+          test -f /tmp/national/PrixCarburants_annuel_2026.zip
+          ls -l /tmp/national
+
+      - name: Extraire les stations corses
+        run: python analyse/extraction_national.py /tmp/national/*.zip
+
+      - name: Recalculer les données et les indicateurs
+        run: python analyse/traitement.py
+
+      - name: Régénérer le classeur Excel et les fichiers à télécharger
+        run: |
+          python analyse/classeur_excel.py
+          cp analyse/analyse_statistique_carburants.xlsx site/data/
+          cp analyse/traitement.py analyse/extraction_national.py site/data/
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  publier:
+    needs: construire
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploiement.outputs.page_url }}
+    steps:
+      - id: deploiement
+        uses: actions/deploy-pages@v4

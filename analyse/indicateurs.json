@@ -1,0 +1,880 @@
+{
+ "lignes_brutes": 6760,
+ "mises_a_jour": 8621,
+ "stations": 108,
+ "mises_a_jour_corsica": 6264,
+ "mises_a_jour_nationales": 2357,
+ "releves_nationaux": 3242,
+ "stations_nationales_corse": 125,
+ "validation": {
+  "releves_corsica": 3882,
+  "releves_retrouves": 3863,
+  "ecart_max_moyenne_g_cts": 0.18372,
+  "ecart_max_moyenne_s_cts": 0.23024
+ },
+ "communes": 47,
+ "doublons_fusionnes": 496,
+ "anomalies": [
+  {
+   "id": 20600011,
+   "date": "2026-05-20 07:25:09+02:00",
+   "carburant": "Gazole",
+   "prix": 1.25,
+   "precedent": 2.23,
+   "suivant": 2.21,
+   "regle": "pic isole"
+  }
+ ],
+ "debut": "2025-04-01",
+ "fin": "2026-11-24",
+ "jours": 603,
+ "fin_corsica": "2026-06-02",
+ "debut_crise": "2026-02-28",
+ "gazole_veille_crise": 1.80075,
+ "gazole_pic": 2.30975,
+ "gazole_date_pic": "2026-09-27",
+ "gazole_hausse_pic_cts": 50.90047,
+ "gazole_hausse_pic_pct": 28.2663,
+ "sp95_veille_crise": 1.84569,
+ "sp95_pic": 2.11532,
+ "sp95_date_pic": "2026-09-29",
+ "gazole_dernier": 2.22055,
+ "sp95_dernier": 2.02395,
+ "prix_max_observe_g": 2.625,
+ "prix_max_observe_s": 2.376,
+ "plein_veille_crise_g": 90.03738,
+ "plein_pic_g": 115.48762,
+ "surcout_plein_pic_g": 25.45024,
+ "date_bascule_gazole_plus_cher": "2026-03-05",
+ "jours_gazole_plus_cher": 265,
+ "ecart_max_gazole_sp95_cts": 23.55047,
+ "date_ecart_max": "2026-05-04",
+ "nb_chg_gazole": 5740,
+ "nb_chg_sp95": 4159,
+ "top_jours_changements": {
+  "2026-03-04": 55,
+  "2026-06-01": 52,
+  "2026-03-06": 49,
+  "2025-06-23": 49,
+  "2026-07-17": 48,
+  "2026-05-26": 46,
+  "2026-05-30": 45,
+  "2026-03-24": 44
+ },
+ "periodes": {
+  "P1": {
+   "debut": "2025-04-01",
+   "fin": "2026-02-27",
+   "jours": 333,
+   "Gazole": {
+    "moy": 1.74316,
+    "min": 1.67122,
+    "date_min": "2025-05-14",
+    "max": 1.80827,
+    "date_max": "2025-11-26",
+    "debut": 1.75322,
+    "fin": 1.80075
+   },
+   "SP95": {
+    "moy": 1.82386,
+    "min": 1.79257,
+    "date_min": "2025-05-12",
+    "max": 1.85719,
+    "date_max": "2025-04-06",
+    "debut": 1.85259,
+    "fin": 1.84569
+   }
+  },
+  "P2": {
+   "debut": "2026-02-28",
+   "fin": "2026-11-24",
+   "jours": 270,
+   "Gazole": {
+    "moy": 2.18622,
+    "min": 1.80285,
+    "date_min": "2026-03-01",
+    "max": 2.30975,
+    "date_max": "2026-09-27",
+    "debut": 1.80297,
+    "fin": 2.22055
+   },
+   "SP95": {
+    "moy": 2.0289,
+    "min": 1.84733,
+    "date_min": "2026-02-28",
+    "max": 2.11532,
+    "date_max": "2026-09-29",
+    "debut": 1.84733,
+    "fin": 2.02395
+   }
+  }
+ },
+ "descriptives": {
+  "P1": {
+   "Gazole": {
+    "n": 34588,
+    "moy": 1.74361,
+    "med": 1.749,
+    "q1": 1.7,
+    "q3": 1.78,
+    "eiq": 0.08,
+    "et": 0.05124,
+    "var": 0.00263,
+    "min": 1.59,
+    "max": 1.89,
+    "etendue": 0.3,
+    "cv": 2.93877
+   },
+   "SP95": {
+    "n": 34588,
+    "moy": 1.82395,
+    "med": 1.825,
+    "q1": 1.799,
+    "q3": 1.85,
+    "eiq": 0.051,
+    "et": 0.03432,
+    "var": 0.00118,
+    "min": 1.72,
+    "max": 1.94,
+    "etendue": 0.22,
+    "cv": 1.88189
+   }
+  },
+  "P2": {
+   "Gazole": {
+    "n": 28706,
+    "moy": 2.18572,
+    "med": 2.23,
+    "q1": 2.09,
+    "q3": 2.25,
+    "eiq": 0.16,
+    "et": 0.12377,
+    "var": 0.01532,
+    "min": 1.686,
+    "max": 2.625,
+    "etendue": 0.939,
+    "cv": 5.66286
+   },
+   "SP95": {
+    "n": 28706,
+    "moy": 2.02855,
+    "med": 1.99,
+    "q1": 1.987,
+    "q3": 2.07,
+    "eiq": 0.083,
+    "et": 0.08891,
+    "var": 0.00791,
+    "min": 1.756,
+    "max": 2.376,
+    "etendue": 0.62,
+    "cv": 4.38304
+   }
+  }
+ },
+ "dispersion": {
+  "Gazole": {
+   "P1": {
+    "etendue_moy": 0.17845,
+    "eiq_moy": 0.05324,
+    "etendue_max": 0.225,
+    "date_etendue_max": "2025-04-11"
+   },
+   "P2": {
+    "etendue_moy": 0.31203,
+    "eiq_moy": 0.07153,
+    "etendue_max": 0.61,
+    "date_etendue_max": "2026-04-07"
+   },
+   "dernier_jour": {
+    "etendue": 0.351,
+    "plein": 17.55,
+    "min": 2.145,
+    "max": 2.496
+   }
+  },
+  "SP95": {
+   "P1": {
+    "etendue_moy": 0.1434,
+    "eiq_moy": 0.04861,
+    "etendue_max": 0.2,
+    "date_etendue_max": "2025-04-01"
+   },
+   "P2": {
+    "etendue_moy": 0.32391,
+    "eiq_moy": 0.08825,
+    "etendue_max": 0.456,
+    "date_etendue_max": "2026-10-27"
+   },
+   "dernier_jour": {
+    "etendue": 0.456,
+    "plein": 22.8,
+    "min": 1.92,
+    "max": 2.376
+   }
+  }
+ },
+ "regression": {
+  "n": 97,
+  "moy_x": 1.74293,
+  "moy_y": 1.82362,
+  "et_x": 0.02956,
+  "et_y": 0.02729,
+  "cov": 0.0008,
+  "r": 0.98854,
+  "r2": 0.97721,
+  "yx": {
+   "a": 0.91267,
+   "b": 0.23291
+  },
+  "xy": {
+   "a": 1.07071,
+   "b": -0.20965,
+   "a_en_y": 0.93396,
+   "b_en_y": 0.19581
+  },
+  "mayer": {
+   "g1": [
+    1.71701,
+    1.79983
+   ],
+   "g2": [
+    1.76831,
+    1.84693
+   ],
+   "a": 0.91809,
+   "b": 0.22345,
+   "n1": 48,
+   "n2": 49
+  }
+ },
+ "regression_P2": {
+  "n": 105,
+  "moy_x": 2.18589,
+  "moy_y": 2.02839,
+  "et_x": 0.0409,
+  "et_y": 0.0515,
+  "cov": 0.00195,
+  "r": 0.92714,
+  "r2": 0.85958,
+  "yx": {
+   "a": 1.16742,
+   "b": -0.52345
+  },
+  "xy": {
+   "a": 0.73631,
+   "b": 0.69236,
+   "a_en_y": 1.35812,
+   "b_en_y": -0.9403
+  },
+  "mayer": {
+   "g1": [
+    2.15417,
+    1.98847
+   ],
+   "g2": [
+    2.217,
+    2.06756
+   ],
+   "a": 1.25897,
+   "b": -0.72358,
+   "n1": 52,
+   "n2": 53
+  }
+ },
+ "comparaisons": {
+  "marque": {
+   "P1": {
+    "Gazole": {
+     "ENI": {
+      "n": 12,
+      "moy": 1.75637
+     },
+     "Indépendant sans enseigne": {
+      "n": 2,
+      "moy": 1.75558
+     },
+     "TotalEnergies": {
+      "n": 40,
+      "moy": 1.74279
+     },
+     "VITO": {
+      "n": 54,
+      "moy": 1.74018
+     }
+    },
+    "SP95": {
+     "ENI": {
+      "n": 12,
+      "moy": 1.83349
+     },
+     "Indépendant sans enseigne": {
+      "n": 2,
+      "moy": 1.83466
+     },
+     "TotalEnergies": {
+      "n": 40,
+      "moy": 1.82411
+     },
+     "VITO": {
+      "n": 54,
+      "moy": 1.82128
+     }
+    }
+   },
+   "P2": {
+    "Gazole": {
+     "ENI": {
+      "n": 12,
+      "moy": 2.23959
+     },
+     "Indépendant sans enseigne": {
+      "n": 2,
+      "moy": 2.18324
+     },
+     "TotalEnergies": {
+      "n": 40,
+      "moy": 2.15537
+     },
+     "VITO": {
+      "n": 54,
+      "moy": 2.1981
+     }
+    },
+    "SP95": {
+     "ENI": {
+      "n": 12,
+      "moy": 2.0886
+     },
+     "Indépendant sans enseigne": {
+      "n": 2,
+      "moy": 2.03322
+     },
+     "TotalEnergies": {
+      "n": 40,
+      "moy": 1.97663
+     },
+     "VITO": {
+      "n": 54,
+      "moy": 2.05566
+     }
+    }
+   }
+  },
+  "dep": {
+   "P1": {
+    "Gazole": {
+     "2A": {
+      "n": 56,
+      "moy": 1.74583
+     },
+     "2B": {
+      "n": 52,
+      "moy": 1.74029
+     }
+    },
+    "SP95": {
+     "2A": {
+      "n": 56,
+      "moy": 1.82645
+     },
+     "2B": {
+      "n": 52,
+      "moy": 1.82108
+     }
+    }
+   },
+   "P2": {
+    "Gazole": {
+     "2A": {
+      "n": 56,
+      "moy": 2.17988
+     },
+     "2B": {
+      "n": 52,
+      "moy": 2.19296
+     }
+    },
+    "SP95": {
+     "2A": {
+      "n": 56,
+      "moy": 2.02361
+     },
+     "2B": {
+      "n": 52,
+      "moy": 2.03455
+     }
+    }
+   }
+  },
+  "epci": {
+   "P1": {
+    "Gazole": {
+     "Communauté d'agglomération de Bastia": {
+      "n": 11,
+      "moy": 1.75643
+     },
+     "Communauté d'agglomération du Pays Ajaccien": {
+      "n": 18,
+      "moy": 1.71908
+     },
+     "Communauté de communes Celavu-Prunelli": {
+      "n": 1,
+      "moy": 1.71202
+     },
+     "Communauté de communes Nebbiu - Conca d'Oro": {
+      "n": 3,
+      "moy": 1.74854
+     },
+     "Communauté de communes Pasquale Paoli": {
+      "n": 7,
+      "moy": 1.71968
+     },
+     "Communauté de communes Spelunca-Liamone": {
+      "n": 6,
+      "moy": 1.76262
+     },
+     "Communauté de communes de Calvi Balagne": {
+      "n": 5,
+      "moy": 1.78154
+     },
+     "Communauté de communes de Fium'Orbu Castellu": {
+      "n": 6,
+      "moy": 1.70341
+     },
+     "Communauté de communes de Marana-Golo": {
+      "n": 8,
+      "moy": 1.73745
+     },
+     "Communauté de communes de l'Alta Rocca": {
+      "n": 5,
+      "moy": 1.74643
+     },
+     "Communauté de communes de l'Oriente": {
+      "n": 2,
+      "moy": 1.76193
+     },
+     "Communauté de communes de l'Île-Rousse - Balagne": {
+      "n": 3,
+      "moy": 1.73447
+     },
+     "Communauté de communes de la Castagniccia-Casinca": {
+      "n": 2,
+      "moy": 1.69434
+     },
+     "Communauté de communes de la Costa Verde": {
+      "n": 1,
+      "moy": 1.68973
+     },
+     "Communauté de communes de la Pieve de l'Ornano et du Taravo": {
+      "n": 8,
+      "moy": 1.73645
+     },
+     "Communauté de communes du Centre Corse": {
+      "n": 4,
+      "moy": 1.76711
+     },
+     "Communauté de communes du Sartenais Valinco Taravo": {
+      "n": 8,
+      "moy": 1.76363
+     },
+     "Communauté de communes du Sud Corse": {
+      "n": 10,
+      "moy": 1.77943
+     }
+    },
+    "SP95": {
+     "Communauté d'agglomération de Bastia": {
+      "n": 11,
+      "moy": 1.83659
+     },
+     "Communauté d'agglomération du Pays Ajaccien": {
+      "n": 18,
+      "moy": 1.80134
+     },
+     "Communauté de communes Celavu-Prunelli": {
+      "n": 1,
+      "moy": 1.79509
+     },
+     "Communauté de communes Nebbiu - Conca d'Oro": {
+      "n": 3,
+      "moy": 1.82788
+     },
+     "Communauté de communes Pasquale Paoli": {
+      "n": 7,
+      "moy": 1.80472
+     },
+     "Communauté de communes Spelunca-Liamone": {
+      "n": 6,
+      "moy": 1.84436
+     },
+     "Communauté de communes de Calvi Balagne": {
+      "n": 5,
+      "moy": 1.85883
+     },
+     "Communauté de communes de Fium'Orbu Castellu": {
+      "n": 6,
+      "moy": 1.78591
+     },
+     "Communauté de communes de Marana-Golo": {
+      "n": 8,
+      "moy": 1.81768
+     },
+     "Communauté de communes de l'Alta Rocca": {
+      "n": 5,
+      "moy": 1.8247
+     },
+     "Communauté de communes de l'Oriente": {
+      "n": 2,
+      "moy": 1.83517
+     },
+     "Communauté de communes de l'Île-Rousse - Balagne": {
+      "n": 3,
+      "moy": 1.81194
+     },
+     "Communauté de communes de la Castagniccia-Casinca": {
+      "n": 2,
+      "moy": 1.78143
+     },
+     "Communauté de communes de la Costa Verde": {
+      "n": 1,
+      "moy": 1.76663
+     },
+     "Communauté de communes de la Pieve de l'Ornano et du Taravo": {
+      "n": 8,
+      "moy": 1.81835
+     },
+     "Communauté de communes du Centre Corse": {
+      "n": 4,
+      "moy": 1.84935
+     },
+     "Communauté de communes du Sartenais Valinco Taravo": {
+      "n": 8,
+      "moy": 1.84082
+     },
+     "Communauté de communes du Sud Corse": {
+      "n": 10,
+      "moy": 1.85966
+     }
+    }
+   },
+   "P2": {
+    "Gazole": {
+     "Communauté d'agglomération de Bastia": {
+      "n": 11,
+      "moy": 2.20537
+     },
+     "Communauté d'agglomération du Pays Ajaccien": {
+      "n": 18,
+      "moy": 2.16378
+     },
+     "Communauté de communes Celavu-Prunelli": {
+      "n": 1,
+      "moy": 2.15567
+     },
+     "Communauté de communes Nebbiu - Conca d'Oro": {
+      "n": 3,
+      "moy": 2.18925
+     },
+     "Communauté de communes Pasquale Paoli": {
+      "n": 7,
+      "moy": 2.16156
+     },
+     "Communauté de communes Spelunca-Liamone": {
+      "n": 6,
+      "moy": 2.19487
+     },
+     "Communauté de communes de Calvi Balagne": {
+      "n": 5,
+      "moy": 2.20192
+     },
+     "Communauté de communes de Fium'Orbu Castellu": {
+      "n": 6,
+      "moy": 2.15815
+     },
+     "Communauté de communes de Marana-Golo": {
+      "n": 8,
+      "moy": 2.2027
+     },
+     "Communauté de communes de l'Alta Rocca": {
+      "n": 5,
+      "moy": 2.16322
+     },
+     "Communauté de communes de l'Oriente": {
+      "n": 2,
+      "moy": 2.26022
+     },
+     "Communauté de communes de l'Île-Rousse - Balagne": {
+      "n": 3,
+      "moy": 2.18575
+     },
+     "Communauté de communes de la Castagniccia-Casinca": {
+      "n": 2,
+      "moy": 2.2012
+     },
+     "Communauté de communes de la Costa Verde": {
+      "n": 1,
+      "moy": 2.17433
+     },
+     "Communauté de communes de la Pieve de l'Ornano et du Taravo": {
+      "n": 8,
+      "moy": 2.2019
+     },
+     "Communauté de communes du Centre Corse": {
+      "n": 4,
+      "moy": 2.21665
+     },
+     "Communauté de communes du Sartenais Valinco Taravo": {
+      "n": 8,
+      "moy": 2.18287
+     },
+     "Communauté de communes du Sud Corse": {
+      "n": 10,
+      "moy": 2.19056
+     }
+    },
+    "SP95": {
+     "Communauté d'agglomération de Bastia": {
+      "n": 11,
+      "moy": 2.04622
+     },
+     "Communauté d'agglomération du Pays Ajaccien": {
+      "n": 18,
+      "moy": 2.0141
+     },
+     "Communauté de communes Celavu-Prunelli": {
+      "n": 1,
+      "moy": 2.01334
+     },
+     "Communauté de communes Nebbiu - Conca d'Oro": {
+      "n": 3,
+      "moy": 2.03641
+     },
+     "Communauté de communes Pasquale Paoli": {
+      "n": 7,
+      "moy": 2.01041
+     },
+     "Communauté de communes Spelunca-Liamone": {
+      "n": 6,
+      "moy": 2.03684
+     },
+     "Communauté de communes de Calvi Balagne": {
+      "n": 5,
+      "moy": 2.02219
+     },
+     "Communauté de communes de Fium'Orbu Castellu": {
+      "n": 6,
+      "moy": 2.0012
+     },
+     "Communauté de communes de Marana-Golo": {
+      "n": 8,
+      "moy": 2.04613
+     },
+     "Communauté de communes de l'Alta Rocca": {
+      "n": 5,
+      "moy": 2.00103
+     },
+     "Communauté de communes de l'Oriente": {
+      "n": 2,
+      "moy": 2.15956
+     },
+     "Communauté de communes de l'Île-Rousse - Balagne": {
+      "n": 3,
+      "moy": 2.00921
+     },
+     "Communauté de communes de la Castagniccia-Casinca": {
+      "n": 2,
+      "moy": 2.07111
+     },
+     "Communauté de communes de la Costa Verde": {
+      "n": 1,
+      "moy": 2.00881
+     },
+     "Communauté de communes de la Pieve de l'Ornano et du Taravo": {
+      "n": 8,
+      "moy": 2.04947
+     },
+     "Communauté de communes du Centre Corse": {
+      "n": 4,
+      "moy": 2.0405
+     },
+     "Communauté de communes du Sartenais Valinco Taravo": {
+      "n": 8,
+      "moy": 2.02865
+     },
+     "Communauté de communes du Sud Corse": {
+      "n": 10,
+      "moy": 2.02067
+     }
+    }
+   }
+  },
+  "auto24": {
+   "P1": {
+    "Gazole": {
+     "False": {
+      "n": 56,
+      "moy": 1.74414
+     },
+     "True": {
+      "n": 52,
+      "moy": 1.74216
+     }
+    },
+    "SP95": {
+     "False": {
+      "n": 56,
+      "moy": 1.8251
+     },
+     "True": {
+      "n": 52,
+      "moy": 1.82259
+     }
+    }
+   },
+   "P2": {
+    "Gazole": {
+     "False": {
+      "n": 56,
+      "moy": 2.1862
+     },
+     "True": {
+      "n": 52,
+      "moy": 2.18623
+     }
+    },
+    "SP95": {
+     "False": {
+      "n": 56,
+      "moy": 2.03147
+     },
+     "True": {
+      "n": 52,
+      "moy": 2.02617
+     }
+    }
+   }
+  }
+ },
+ "plein_litres": 50,
+ "peremption_jours": 120,
+ "reperes": {
+  "pic_printemps": {
+   "date": "2026-04-09",
+   "gazole": 2.24731
+  },
+  "creux_ete": {
+   "date": "2026-07-06",
+   "gazole": 2.01024
+  },
+  "veille_destockage": {
+   "date": "2026-10-30",
+   "gazole": 2.2741,
+   "sp95": 2.10675
+  },
+  "semaine_destockage": {
+   "date": "2026-11-06",
+   "gazole": 2.25494,
+   "sp95": 2.09721
+  },
+  "dernier": {
+   "date": "2026-11-24",
+   "gazole": 2.22055,
+   "sp95": 2.02395
+  }
+ },
+ "ruptures_mois": {
+  "2025-04": {
+   "Gazole": 15,
+   "SP95": 14
+  },
+  "2025-05": {
+   "Gazole": 6,
+   "SP95": 4
+  },
+  "2025-06": {
+   "Gazole": 19,
+   "SP95": 16
+  },
+  "2025-07": {
+   "Gazole": 17,
+   "SP95": 15
+  },
+  "2025-08": {
+   "Gazole": 9,
+   "SP95": 4
+  },
+  "2025-09": {
+   "Gazole": 14,
+   "SP95": 11
+  },
+  "2025-10": {
+   "Gazole": 17,
+   "SP95": 17
+  },
+  "2025-11": {
+   "Gazole": 13,
+   "SP95": 24
+  },
+  "2025-12": {
+   "Gazole": 17,
+   "SP95": 22
+  },
+  "2026-01": {
+   "Gazole": 0,
+   "SP95": 0
+  },
+  "2026-02": {
+   "Gazole": 0,
+   "SP95": 0
+  },
+  "2026-03": {
+   "Gazole": 17,
+   "SP95": 18
+  },
+  "2026-04": {
+   "Gazole": 0,
+   "SP95": 0
+  },
+  "2026-05": {
+   "Gazole": 2,
+   "SP95": 3
+  },
+  "2026-06": {
+   "Gazole": 1,
+   "SP95": 0
+  },
+  "2026-07": {
+   "Gazole": 2,
+   "SP95": 0
+  },
+  "2026-08": {
+   "Gazole": 0,
+   "SP95": 0
+  },
+  "2026-09": {
+   "Gazole": 0,
+   "SP95": 0
+  },
+  "2026-10": {
+   "Gazole": 0,
+   "SP95": 0
+  },
+  "2026-11": {
+   "Gazole": 1,
+   "SP95": 0
+  }
+ },
+ "journal": [
+  "Fichier brut : 6760 lignes, 27 colonnes, 108 stations",
+  "496 lignes en double (même station, même horodatage) fusionnées : 6264 mises à jour distinctes",
+  "Fichier national 2026 : 125 points de vente corses avec au moins un prix (19 absents de data.corsica, écartés pour garder la même population de stations)",
+  "Contrôle sur la période commune (1er janvier - 2 juin 2026) : 3863 relevés gazole/SP95 de data.corsica sur 3882 retrouvés dans le fichier national à la seconde près et au même prix ; moyennes journalières reconstituées à 0.18 ct (gazole) et 0.23 ct (SP95) près au plus",
+  "Prolongement du 2026-06-03 au 2026-11-24 : 2357 mises à jour de 106 stations ajoutées, soit 8621 mises à jour au total",
+  "1 prix aberrant(s) retiré(s) : Gazole 1.25 €/L (pic isole)",
+  "Table des stations : 108 stations, 47 communes, marques : {'VITO': 54, 'TotalEnergies': 40, 'ENI': 12, 'Indépendant sans enseigne': 2}",
+  "Panel journalier du 2025-04-01 au 2026-11-24 (603 jours) : 63294 prix gazole et 63294 prix SP95 station×jour (report du dernier prix connu, périmé après 120 jours)",
+  "Série double (P1) : 97 stations ; r = 0.989 ; r² = 0.977 ; y = 0.913x + 0.233 (moindres carrés de y en x)",
+  "Série double (P2) : 105 stations ; r = 0.927 ; r² = 0.860 ; y = 1.167x + -0.523 (moindres carrés de y en x)",
+  "Jours où le plus de stations ont changé leur prix du gazole : 2026-03-04 (55), 2026-06-01 (52), 2026-03-06 (49), 2025-06-23 (49), 2026-07-17 (48), 2026-05-26 (46), 2026-05-30 (45), 2026-03-24 (44)"
+ ]
+}
