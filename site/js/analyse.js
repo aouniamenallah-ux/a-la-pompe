@@ -25,7 +25,7 @@
     ];
     document.getElementById("etapes").replaceChildren(...items.map(([t, p]) => {
       const li = AP.el("li"); const d = AP.el("div");
-      d.append(AP.el("h4", null, t), AP.el("p", null, p)); li.appendChild(d); return li;
+      d.append(AP.el("h3", null, t), AP.el("p", null, p)); li.appendChild(d); return li;
     }));
   }
 

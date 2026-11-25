@@ -286,7 +286,7 @@
       det.addEventListener("toggle", () => {
         if (!det.open) return;
         det.querySelector(".table-scroll")?.remove();
-        const wrap = el("div", "table-scroll");
+        const wrap = el("div", "table-scroll"); wrap.tabIndex = 0; wrap.setAttribute("role", "region"); wrap.setAttribute("aria-label", "Tableau de données, défilable");
         const t = el("table");
         const cap = el("caption", "sr-only", opts.titre);
         t.appendChild(cap);
@@ -371,7 +371,19 @@
     "record-chg-n": () => String(Object.values(I.top_jours_changements)[0]),
     "genere": () => D.meta.genere ? fmt.jourC(parseJour(D.meta.genere.slice(0, 10))) : ""
   };
+  // Les marques SVG qui portent un aria-label ont besoin d'un rôle (sinon l'attribut est ignoré)
+  function rolesSvg(racine) {
+    (racine.querySelectorAll ? racine.querySelectorAll("svg [aria-label]:not([role])") : []).forEach(n => {
+      if (/^(rect|path|circle|g|line|polygon|ellipse)$/.test(n.localName)) n.setAttribute("role", "img");
+    });
+  }
+  function surveillerSvg() {
+    rolesSvg(document);
+    new MutationObserver(ms => { for (const m of ms) m.addedNodes.forEach(n => { if (n.nodeType === 1) rolesSvg(n); }); if (ms.some(m => m.type === "attributes")) rolesSvg(document); })
+      .observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["aria-label"] });
+  }
   document.addEventListener("DOMContentLoaded", () => {
+    surveillerSvg();
     initEntete();
     const an = document.querySelector("[data-annee]");
     if (an) an.textContent = new Date().getFullYear();

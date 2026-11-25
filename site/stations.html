@@ -44,7 +44,7 @@
     <div class="wrap">
       <figure class="chart-card" id="carte-explorer">
         <div class="chart-head">
-          <h3 id="s1">Les prix de chaque station, jour par jour</h3>
+          <h2 id="s1">Les prix de chaque station, jour par jour</h2>
           <p class="sub">Couleur&nbsp;: écart entre le prix de la station et le prix médian de l'île le jour choisi. Un prix reste valable jusqu'à sa mise à jour suivante (120 jours au plus).</p>
         </div>
         <div class="controls">
@@ -165,7 +165,7 @@
       <div class="chart-card">
         <label class="sr-only" for="recherche">Rechercher une station</label>
         <input class="search" type="search" id="recherche" placeholder="Rechercher une station, une commune, une enseigne…">
-        <div class="table-scroll" style="max-height:560px">
+        <div class="table-scroll" style="max-height:560px" tabindex="0" role="region" aria-label="Liste des stations, défilable">
           <table id="table-stations">
             <caption class="sr-only">Prix des stations-service corses le jour choisi</caption>
             <thead><tr>
@@ -188,11 +188,11 @@
 <footer class="site-footer">
   <div class="wrap">
     <div>
-      <h4>À la pompe</h4>
+      <h3>À la pompe</h3>
       <p>Les prix des carburants en Corse, station par station, depuis avril 2025. Projet réalisé pour la SAÉ 303 «&nbsp;Concevoir des visualisations de données pour le web et un support animé&nbsp;».</p>
     </div>
     <div>
-      <h4>Données</h4>
+      <h3>Données</h3>
       <ul>
         <li><a href="https://data.corsica/datasets/prix-des-carburants-j-1-avec-historique-en-corse">data.corsica · Prix des carburants J-1</a></li>
         <li><a href="https://www.prix-carburants.gouv.fr/rubrique/opendata/">prix-carburants.gouv.fr · fichiers annuels 2025 et 2026</a></li>
@@ -202,7 +202,7 @@
       </ul>
     </div>
     <div>
-      <h4>Réalisation</h4>
+      <h3>Réalisation</h3>
       <ul>
         <li>Amen Allah Aouni · BUT MMI 2</li>
         <li>IUT de Corse, Università di Corsica</li>
