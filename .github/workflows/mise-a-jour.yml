@@ -15,6 +15,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: write   # pour garder la tâche planifiée active (voir la dernière étape)
 
 concurrency:
   group: pages
@@ -62,6 +63,13 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site
+
+      # GitHub suspend les tâches planifiées d'un dépôt public après 60 jours sans activité :
+      # on réactive la tâche à chaque exécution pour que la mise à jour quotidienne ne s'arrête pas.
+      - name: Garder la mise à jour quotidienne active
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/mise-a-jour.yml/enable"
 
   publier:
     needs: construire
